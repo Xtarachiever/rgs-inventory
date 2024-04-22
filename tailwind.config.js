@@ -12,7 +12,8 @@ module.exports = {
       color: ["group-hover"],
       zIndex: {
         '2': '2',
-        '1':'1'
+        '1':'1',
+        '10':'10'
       },
       fontFamily: {
         ubuntu: ['Ubuntu', 'sans-serif'],
