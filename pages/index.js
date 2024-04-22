@@ -1,11 +1,11 @@
-import Navbar from "@/component/layout/Navbar";
+import Layout from "@/component/Layout";
 
 export default function Home() {
   return (
     <main
       className={`flex min-h-screen`}
     >
-      <Navbar />
+      <Layout />
     </main>
   );
 }
