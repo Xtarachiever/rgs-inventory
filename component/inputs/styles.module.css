@@ -1,0 +1,35 @@
+.search_input{
+    position: relative;
+    overflow: hidden;
+}
+.search_input input{
+    border: 1px solid #9F9F9F;
+    border-radius: 20px;
+    padding: 10px 50px;
+    width: 100%;
+    outline: none;
+    z-index: 10;
+}
+.search_input svg{
+    position: absolute;
+    top: 13px;
+    margin-left: 20px;
+}
+.search_input .clickable_search_icon{
+    position: absolute;
+    background-color: #0A9F4D;
+    width: 65px;
+    height: 100%;
+    top: 0px;
+    right: 0px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    color: white;
+}
+.search_input .clickable_search_icon svg{
+    position: absolute;
+    right: 25px;
+    font-size: 22px;
+    top: 12px;
+    cursor: pointer;
+}
