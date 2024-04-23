@@ -33,3 +33,13 @@
     top: 12px;
     cursor: pointer;
 }
+
+/* Input Field */
+.input_field input{
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #0A9F4D;
+    border-radius: 5px;
+    outline: none;
+    padding-left: 20px;
+}
