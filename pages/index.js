@@ -12,7 +12,7 @@ export default function Home() {
           <div className={`h-full img-container`}>
             <img src={'/rgs-landing-image.jpeg'} alt="rgs-image"/>
           </div>
-          <div className="pl-8 text-center welcome-details">
+          <div className="sm:pl-8 text-center welcome-details">
             <p className="text-4xl text-primary py-4 mb-4">WELCOME!</p>
             <div className="mt-[50px]">
               <p className="px-6 pb-4">Welcome to RGS, your premier destination for high-quality, sustainable agricultural products straight from the farm to your table.</p>

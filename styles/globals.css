@@ -19,6 +19,7 @@
 body {
   box-sizing: border-box;
   margin: auto;
+  overflow: hidden;
 }
 .guest-page-container{
   width: 80%;
@@ -38,6 +39,7 @@ body {
   border-top-left-radius: 40px;
   border-top-right-radius: 40px;
   overflow: hidden;
+  min-width: 300px;
 }
 .guest-page-container .img-container img{
   height: 100%;
@@ -85,5 +87,11 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@media screen and (max-width:750px) {
+  .guest-page-container .img-container{
+    display: none;
   }
 }

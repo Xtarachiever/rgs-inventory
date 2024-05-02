@@ -35,7 +35,8 @@
 }
 
 /* Input Field */
-.input_field input{
+.input_field input,
+.input_field textarea{
     width: 100%;
     padding: 10px;
     border: 2px solid #0A9F4D;
