@@ -4,11 +4,13 @@ import { IoSearchOutline } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa6";
 import { useState } from 'react';
 import Modal from '@/component/products/Modal';
+import { ToastContainer } from 'react-toastify';
 
 const Products = () => {
     const [openModal, setOpenModal] = useState(false)
   return (
     <Layout>
+        <ToastContainer />
         <div>
             <p>Products</p>
             <div>
