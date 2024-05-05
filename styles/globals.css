@@ -90,6 +90,13 @@ body {
   }
 }
 
+/* Products Page */
+.update-product{
+  background-color: #0A9F4D;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 3px;
+}
 @media screen and (max-width:750px) {
   .guest-page-container .img-container{
     display: none;

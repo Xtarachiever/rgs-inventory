@@ -1,35 +1,9 @@
-import AddProductHook from '@/hooks/AddProductHook';
 import TextAreaInput from '../inputs/TextArea';
 import TextInput from '../inputs/TextInput';
 import styles from './styles.module.css';
 import { IoClose } from "react-icons/io5";
-import { toast } from 'react-toastify';
 
-const Modal = ({setOpenModal}) => {
-    const { salesPrice, shortName, productName, description, errors, regularPrice, features, specifications, handleValueChange, handleSubmit, reset } = AddProductHook();
-
-    const onSubmit = async (values) =>{
-        try{
-            const res = await fetch('/api/products/add-product',{
-                method:"POST",
-                body:JSON.stringify(values),
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                },
-            })
-            if(res.ok){
-                toast.success('Product Successfully added');
-                reset();
-                setOpenModal(false)
-            }
-            if(!res.ok){
-                toast.error(res.statusText)
-            }
-        }catch(err){
-            toast.error(err?.message)
-        }
-    }
+const Modal = ({setOpenModal, salesPrice, shortName, productName, description, errors, regularPrice, features, specifications, handleValueChange, handleSubmit, reset, onSubmit}) => {
   return (
     <div className={styles.product_wrapper}>
         <div className={`${styles.product_container} relative`}>
