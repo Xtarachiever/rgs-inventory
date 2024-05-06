@@ -8,13 +8,14 @@ import { ToastContainer, toast } from "react-toastify";
 import Table from "@/component/tables/Table";
 import { useMemo } from "react";
 import AddProductHook from "@/hooks/AddProductHook";
-import EditProductHook from "@/hooks/EditProductHook";
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 
 const Products = () => {
   const [openModal, setOpenModal] = useState(false);
+  const products = useSelector((state)=>state.products.products)
   const [data, setData] = useState([]);
-
-  const { productName:updateProductName, fetchData } =  EditProductHook();
+  const router = useRouter();
 
   const {
     salesPrice,
@@ -28,11 +29,15 @@ const Products = () => {
     handleValueChange,
     handleSubmit,
     reset,
+    loading
   } = AddProductHook();
 
   const handleUpdate = async (id) =>{
     try {
-      await fetchData(id);
+      // await fetchData(id);
+      if(id){
+        router.push(`/products/${id}`)
+      }
     } catch (error) {
       console.error("Error updating product:", error);
     }
@@ -62,18 +67,9 @@ const Products = () => {
 }
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const res = await fetch("/api/products/get-product", {
-        method: "GET",
-      });
-      const data = await res.json();
-      setData(data?.products);
-    };
+    setData(products)
+  }, [products]);
 
-    fetchProducts();
-
-    // console.log(data);
-  }, []);
   const columns = useMemo(
     () => [
       {
@@ -100,7 +96,7 @@ const Products = () => {
         Header: "Actions",
         Cell: ({row}) => {
             return (
-                <button className="update-product" onClick={()=>handleUpdate(row.original._id)}>Update</button>
+                <button className="update-product" onClick={()=>handleUpdate(row.original.slug)}>Update</button>
             )
         }
       },
@@ -134,9 +130,14 @@ const Products = () => {
               Add Products
             </div>
           </div>
-          <div className="overflow-scroll mt-8">
-            <Table columns={columns} data={data} />
-          </div>
+          {
+            loading ? 
+            <div className="loader">loading</div>
+            :
+            <div className="overflow-scroll mt-8">
+                <Table columns={columns} data={data} />
+            </div>
+          }
           {openModal ? (
             <Modal
               reset={reset}

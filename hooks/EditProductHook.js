@@ -5,7 +5,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 
 const EditProductHook = () =>{
-    const [singleProduct, setSingleProduct] = useState([])
+    const [singleProduct, setSingleProduct] = useState([]);
+
     const { 
         handleSubmit, 
         setValue, 
@@ -26,27 +27,29 @@ const EditProductHook = () =>{
       });
 
       const fetchData = useCallback(async (id) =>{
-        const res = await fetch(`/api/products/edit-product?id=${id}`,{
+        const res = await fetch(`/api/products/get-product?id=${id}`,{
             method:"GET"
         })
         if(res.ok){
             const data = await res.json();
-            setSingleProduct(data)
+            return setSingleProduct(data?.product)
         }else{
             toast.error('Something went wrong');
         }
       },[])
 
+      // console.log(singleProduct)
+
       useEffect(()=>{
         if(singleProduct){
             reset({
-                productName: singleProduct?.productName,
-                shortName: singleProduct?.shortName,
-                description: singleProduct?.description,
-                regularPrice: singleProduct?.regularPrice,
-                salesPrice: singleProduct?.salesPrice,
-                features: singleProduct?.features,
-                specifications: singleProduct?.specifications
+                productName: singleProduct?.productName || "",
+                shortName: singleProduct?.shortName || "",
+                description: singleProduct?.description || "",
+                regularPrice: singleProduct?.regularPrice || "",
+                salesPrice: singleProduct?.salesPrice || "",
+                features: singleProduct?.features || "",
+                specifications: singleProduct?.specifications || ""
             })
         }
       },[reset,singleProduct])
@@ -75,7 +78,8 @@ const EditProductHook = () =>{
         specifications,
         isSubmitting,
         errors:formState.errors,
-        fetchData
+        fetchData,
+        singleProduct
     }
 }
 

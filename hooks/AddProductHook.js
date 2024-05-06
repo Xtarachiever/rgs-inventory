@@ -1,9 +1,13 @@
 import { useForm } from "react-hook-form";
 import { AddProductValidator } from "./validators/add-product-validator";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useMemo } from "react";
+import { useMemo, useEffect, useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setProducts } from "@/store/slices/ProductSlice";
 
 const AddProductHook = () =>{
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
     const { 
         handleSubmit, 
         setValue, 
@@ -22,6 +26,26 @@ const AddProductHook = () =>{
             specifications:""
         },
       });
+
+        const fetchProducts = useCallback(async () => {
+          setLoading(true);
+          const res = await fetch("/api/products/get-products", {
+            method: "GET",
+          });
+          if(res.ok){
+            setLoading(false);
+            const data = await res.json();
+            dispatch(setProducts(data?.products));
+          }else{
+            console.log("An error occured")
+          }
+          // setData(data?.products);
+
+        },[]);
+
+        useEffect(()=>{
+          fetchProducts()
+        },[fetchProducts])
 
       const handleValueChange = (field,value) =>{
         setValue(field,value)
@@ -45,7 +69,8 @@ const AddProductHook = () =>{
         features,
         specifications,
         isSubmitting,
-        errors:formState.errors
+        errors:formState.errors,
+        loading
     }
 }
 

@@ -7,12 +7,11 @@ export default async function handler(req,res){
     );
     if(req.method === "GET"){
         try{
-            const { id } = req.query;
-            const getProduct = await AddProduct.findOne({_id:id});
-            if(!getProduct){
+            const getAllProducts = await AddProduct.find({});
+            if(!getAllProducts){
                 return res.status(304).json({message: "No product Found"})
             }
-            return res.status(200).json({message:"Product retrieved successfully", products: getProduct})
+            return res.status(200).json({message:"Products retrieved successfully", products: getAllProducts})
         }catch(err){
             return res.status(404).json({message: err?.message})
         }
