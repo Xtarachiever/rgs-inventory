@@ -18,6 +18,7 @@ const Modal = ({
   reset,
   onSubmit,
   params,
+  update
 }) => {
   return (
     <div className={styles.product_wrapper}>
@@ -35,14 +36,27 @@ const Modal = ({
           )}
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="px-6">
-              <TextInput
-                placeholder="Product Name"
-                name="productName"
-                value={productName}
-                onChange={(e) =>
-                  handleValueChange("productName", e.target.value)
-                }
-              />
+              {
+                update ?
+                <TextInput
+                  placeholder="Product Name"
+                  name="productName"
+                  value={productName}
+                  update={update}
+                  onChange={(e) =>
+                    handleValueChange("productName", e.target.value)
+                  }
+                />
+                :
+                <TextInput
+                  placeholder="Product Name"
+                  name="productName"
+                  value={productName}
+                  onChange={(e) =>
+                    handleValueChange("productName", e.target.value)
+                  }
+                />
+              }
               {errors?.productName && (
                 <p className="text-red-500">{errors?.productName?.message}</p>
               )}

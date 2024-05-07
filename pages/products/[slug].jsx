@@ -10,7 +10,7 @@ const SingleProduct = () => {
   const router = useRouter();
 //   console.log(fetchData)
   const [openModal, setOpenModal] = useState(true);
-
+  const update= true;
 
   const {
     regularPrice,
@@ -97,6 +97,7 @@ const SingleProduct = () => {
         params={params}
         onSubmit={onSubmit}
         reset={reset}
+        update={update}
       />
     </Layout>
   );
