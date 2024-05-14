@@ -48,7 +48,7 @@ const DashboardLayout = () => {
                         <p>Low Stock Items: <span>22</span></p>
                         <p>Low Stock Items: <span>22</span></p>
                     </div>
-                    <div className="w-[40%]">
+                    <div className="w-[40%] min-w-[200px]">
                         <PieChart />
                     </div>
                 </div>

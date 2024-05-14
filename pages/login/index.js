@@ -23,9 +23,7 @@ const Login = () => {
             toast.success("Login Successful")
         }
         if(!status.ok){
-            toast.error(status?.error)
-        }else{
-            toast.error("Something went wrong")
+            toast.error(status?.error || "Something went wrong")
         }
     }
   return (

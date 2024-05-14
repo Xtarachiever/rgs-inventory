@@ -19,7 +19,7 @@
 body {
   box-sizing: border-box;
   margin: auto;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 .guest-page-container{
   width: 80%;

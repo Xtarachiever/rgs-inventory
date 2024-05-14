@@ -22,9 +22,9 @@ const Modal = ({
 }) => {
   return (
     <div className={styles.product_wrapper}>
-      <div className={`${styles.product_container} relative`}>
+      <div className={`${styles.product_container} relative pb-5`}>
         <IoClose
-          className="absolute top-[10px] right-[10px]"
+          className="absolute top-[10px] right-[10px] cursor-pointer"
           fontSize={"1.8rem"}
           onClick={() => setOpenModal(false)}
         />

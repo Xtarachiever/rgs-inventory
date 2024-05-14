@@ -104,6 +104,15 @@ const Products = () => {
     []
   );
 
+  useEffect(()=>{
+    if(openModal){
+      // document.body.classList.add('modal-open');
+      document.body.setAttribute('style', 'overflow: hidden;');
+    }else{
+      document.body.setAttribute('style', 'overflow: scroll;');
+    }
+  },[openModal])
+
   return (
     <Layout>
       <ToastContainer />
