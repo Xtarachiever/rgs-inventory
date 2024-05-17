@@ -22,7 +22,7 @@ const SideBar = () => {
       </p>
       <div className={`pt-4 ${styles.sidebar_links}`}>
         <Link href="/dashboard">Dashboard</Link> <br />
-        <Link href={"/products"} onClick={() => handleToggle(0)}>
+        <span href={"/products"} onClick={() => handleToggle(0)}>
           <p className="flex justify-between items-center">
             Inventory{" "}
             {isOpen[0] ? (
@@ -31,7 +31,7 @@ const SideBar = () => {
               <IoIosArrowDown className="inline pointer-events-none" />
             )}
           </p>
-        </Link>{" "}
+        </span>{" "}
         {
           isOpen[0] ? 
           <div className="text-[13px] pl-2">

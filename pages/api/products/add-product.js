@@ -9,7 +9,7 @@ export default async function handler(req,res){
             res.json({message:'Connection Failed ...'})
         );
         try{
-            const { productName, shortName, description, features, specifications, salesPrice, regularPrice} = req.body
+            const { productName, shortName, description, features, specifications, salesPrice, regularPrice,quantity} = req.body
             const checkExitingProduct = await AddProduct.findOne({productName:productName});
             if(checkExitingProduct){
                 return res.status(400).json({message:"Product already Exists, you just have to update"});
@@ -23,6 +23,7 @@ export default async function handler(req,res){
                 specifications,
                 salesPrice,
                 regularPrice,
+                quantity,
                 slug: productName.toLowerCase().replace(/\s+/g, '-')
             }).then((data)=>{
                 return res.status(201).json({message:"Product Successfully added", products: data})

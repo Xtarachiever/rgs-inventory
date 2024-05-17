@@ -16,6 +16,10 @@ const addProductSchema = new Schema({
         required:true,
         trim:true
     },
+    quantity:{
+        type:Number,
+        required:true
+    },
     description:{
         type: String,
         required:true,

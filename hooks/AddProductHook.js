@@ -22,6 +22,7 @@ const AddProductHook = () =>{
             description:"",
             regularPrice:0,
             salesPrice:0,
+            quantity:0,
             features:"",
             specifications:""
         },
@@ -55,7 +56,7 @@ const AddProductHook = () =>{
         return formState.isSubmitting
       },[formState]);
 
-      const {productName,shortName,description,regularPrice,salesPrice,features,specifications} = watch()
+      const {productName,shortName,description,regularPrice,salesPrice,features,specifications,quantity} = watch()
 
     return{
         handleValueChange,
@@ -70,7 +71,8 @@ const AddProductHook = () =>{
         specifications,
         isSubmitting,
         errors:formState.errors,
-        loading
+        loading,
+        quantity
     }
 }
 

@@ -1,12 +1,20 @@
 .sidebar_links{
     padding-top: 20px;
 }
-.sidebar_links a{
+/* .sidebar_links p{
+    display: inline;
+    text-align: left;
+    padding: 5px 0px 5px 12px;
+} */
+.sidebar_links a,
+.sidebar_links span{
     padding: 10px;
     display: block;
     padding-left: 20px;
+    cursor: pointer;
 }
-.sidebar_links a:hover{
+.sidebar_links a:hover,
+.sidebar_links span:hover{
     color: white;
     background-color: #0A9F4D;
     border-radius: 10px;

@@ -20,6 +20,7 @@ const EditProductHook = () =>{
             shortName: "",
             description:"",
             regularPrice:0,
+            quantity:0,
             salesPrice:0,
             features:"",
             specifications:""
@@ -49,7 +50,8 @@ const EditProductHook = () =>{
                 regularPrice: singleProduct?.regularPrice || "",
                 salesPrice: singleProduct?.salesPrice || "",
                 features: singleProduct?.features || "",
-                specifications: singleProduct?.specifications || ""
+                specifications: singleProduct?.specifications || "",
+                quantity: singleProduct?.quantity || 0
             })
         }
       },[reset,singleProduct])
@@ -63,7 +65,7 @@ const EditProductHook = () =>{
         return formState.isSubmitting
       },[formState]);
 
-      const {productName,shortName,description,regularPrice,salesPrice,features,specifications} = watch()
+      const {productName,shortName,description,regularPrice,salesPrice,features,specifications,quantity} = watch()
 
     return{
         handleValueChange,
@@ -79,7 +81,8 @@ const EditProductHook = () =>{
         isSubmitting,
         errors:formState.errors,
         fetchData,
-        singleProduct
+        singleProduct,
+        quantity
     }
 }
 

@@ -1,0 +1,80 @@
+import { useForm } from "react-hook-form";
+import { PurchaseValidator } from "./validators/add-product-validator";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useMemo, useEffect, useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setPurchases } from "@/store/slices/PurchaseSlice";
+import { toast } from "react-toastify";
+
+const PurchaseHook = () =>{
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+    const { 
+        handleSubmit, 
+        setValue, 
+        formState, 
+        reset,
+        watch } = useForm({
+        resolver: yupResolver(PurchaseValidator),
+        mode: 'all',
+        defaultValues: {
+            productName: "",
+            purchasePrice:0,
+            vendorName:"",
+            quantity:0,
+            description:"",
+            billStatus:"",
+            deliveryStatus:""
+        },
+      });
+
+    const fetchData = useCallback(async () =>{
+      try{
+        const res = await fetch('/api/purchases/get-purchases',{
+          method:'GET'
+        });
+        if(res.ok){
+          const data = await res.json();
+          dispatch(setPurchases(data?.purchases))
+
+          toast.success(data?.message)
+        }
+      }catch(err){
+        console.log(err)
+        toast.success(err?.message)
+      }
+    },[])
+
+    useEffect(()=>{
+      fetchData();
+    },[fetchData])
+
+
+      const handleValueChange = (field,value) =>{
+        setValue(field,value)
+      }
+
+      const isSubmitting = useMemo(() =>{
+        return formState.isSubmitting
+      },[formState]);
+
+      const {productName,purchasePrice,description,vendorName,quantity,billStatus,deliveryStatus} = watch();
+
+    return{
+        handleValueChange,
+        handleSubmit,
+        reset,
+        productName,
+        purchasePrice,
+        description,
+        vendorName,
+        quantity,
+        billStatus,
+        deliveryStatus,
+        isSubmitting,
+        errors:formState.errors,
+        loading
+    }
+}
+
+export default PurchaseHook;

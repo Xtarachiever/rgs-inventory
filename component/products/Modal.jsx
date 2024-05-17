@@ -11,6 +11,7 @@ const Modal = ({
   description,
   errors,
   regularPrice,
+  quantity,
   features,
   specifications,
   handleValueChange,
@@ -94,6 +95,21 @@ const Modal = ({
                   {errors?.regularPrice && (
                     <p className="text-red-500">
                       {errors?.regularPrice?.message}
+                    </p>
+                  )}
+                </div>
+                <div className="w-full">
+                  <TextInput
+                    placeholder="Quantity"
+                    name="quantity"
+                    value={quantity}
+                    onChange={(e) =>
+                      handleValueChange("quantity", e.target.value)
+                    }
+                  />
+                  {errors?.quantity && (
+                    <p className="text-red-500">
+                      {errors?.quantity?.message}
                     </p>
                   )}
                 </div>

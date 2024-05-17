@@ -21,6 +21,7 @@ const SingleProduct = () => {
     features,
     specifications,
     errors,
+    quantity,
     handleSubmit,
     handleValueChange,
     singleProduct,
@@ -45,6 +46,7 @@ const SingleProduct = () => {
             specifications:values.specifications,
             salesPrice:values.salesPrice,
             regularPrice:values.regularPrice,
+            quantity:values.quantity,
           })
         })
         console.log(res.json());
@@ -98,6 +100,7 @@ const SingleProduct = () => {
         onSubmit={onSubmit}
         reset={reset}
         update={update}
+        quantity={quantity}
       />
     </Layout>
   );
