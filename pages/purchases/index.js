@@ -110,7 +110,7 @@ const Purchases = () => {
           placeholder={"Search for Products..."}
           buttonName={"Add Purchases"}
         />
-        <div>
+        <div className="overflow-scroll mt-8">
           {
             purchases ? 
             <Table data={purchases} columns={columns}/>

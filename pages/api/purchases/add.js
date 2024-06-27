@@ -2,10 +2,11 @@ import connectMongo from "@/database/conn";
 import Purchase from "@/models/PurchaseSchema";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
+import AddProduct from "@/models/AddProductSchema";
 
 export default async function handler(req, res) {
   const session = await getServerSession(req, res, authOptions);
-
+  const db = await connectMongo();
   if (session) {
     connectMongo().catch((error) =>
       res.json({ message: "Connection Failed ..." })
@@ -21,6 +22,23 @@ export default async function handler(req, res) {
           quantity,
           deliveryStatus,
         } = req.body;
+
+        if (deliveryStatus === "Delivered") {
+          // Update quantity in Product collection using aggregation pipeline
+          await AddProduct.updateOne(
+            { productName: productName, deliveryStatus: 'Delivered' }, // Match product by name
+            [{ // Aggregation pipeline stages
+              $set: { // Set fields for the document
+                quantity: { // Set the quantity field
+                  $add: [ // Add the following values
+                    "$quantity", // Current quantity in the Product collection
+                    quantity // Quantity from the new purchase
+                  ]
+                }
+              }
+            }]
+          );
+        }        
 
         Purchase.create({
             vendorName: vendorName,
