@@ -26,18 +26,37 @@ export default async function handler(req, res) {
         if (deliveryStatus === "Delivered") {
           // Update quantity in Product collection using aggregation pipeline
           await AddProduct.updateOne(
-            { productName: productName, deliveryStatus: 'Delivered' }, // Match product by name
+            { productName: productName }, // Match product by name
             [{ // Aggregation pipeline stages
-              $set: { // Set fields for the document
-                quantity: { // Set the quantity field
-                  $add: [ // Add the following values
-                    "$quantity", // Current quantity in the Product collection
-                    quantity // Quantity from the new purchase
+              $set: { 
+                quantity: {
+                  $add: [
+                    "$quantity",
+                    quantity
                   ]
                 }
               }
             }]
           );
+
+          const findByProductName = await AddProduct.findOne({productName: productName})
+          if(!findByProductName){
+            AddProduct.create({
+              productName,
+              shortName:productName,
+              description,
+              features:'',
+              specifications:'',
+              salesPrice:purchasePrice + 500,
+              regularPrice: purchasePrice,
+              quantity,
+              slug: productName.toLowerCase().replace(/\s+/g, '-')
+            }).then((data)=>{
+              return res.status(201).json({status:true, message: "Successfully added", product:data})
+            }).catch((err) => {
+                return res.status(404).json({message: err?.message });
+            });
+          }
         }        
 
         Purchase.create({
