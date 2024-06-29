@@ -1,7 +1,8 @@
 import { GoPackage } from "react-icons/go";
 import styles from './styles.module.css';
 import { PieChart } from "../charts/PieChart";
-const DashboardLayout = () => {
+const DashboardLayout = ({totalProductsAvailable,purchasesToBeReceived,noOfUnpaidProducts}) => {
+    const totalProducts = totalProductsAvailable + purchasesToBeReceived
   return (
     <div>
         <div className={`flex w-full justify-between ${styles.dashboard_container}`}>
@@ -9,32 +10,32 @@ const DashboardLayout = () => {
                 <p className={styles.header}>Sales Activity</p>
                 <div className={styles.analytics_div}>
                     <div className={styles.sales_analytics}>
-                        <p className={styles.sales_number}>51</p>
+                        <p className={styles.sales_number}>{noOfUnpaidProducts ? noOfUnpaidProducts : 0}</p>
                         <p>QTY</p>
-                        <span className={styles.sales_info}><GoPackage /> To be packed</span>
+                        <span className={styles.sales_info}><GoPackage /> To be paid</span>
                     </div>
                     <div className={styles.sales_analytics}>
-                        <p className={styles.sales_number}>51</p>
+                        <p className={styles.sales_number}>{purchasesToBeReceived ? purchasesToBeReceived : 0}</p>
                         <p>QTY</p>
-                        <span className={styles.sales_info}><GoPackage /> To be packed</span>
+                        <span className={styles.sales_info}><GoPackage /> To be received</span>
                     </div>
                     <div className={styles.sales_analytics}>
-                        <p className={styles.sales_number}>51</p>
+                        <p className={styles.sales_number}>{totalProductsAvailable ? totalProductsAvailable : 0}</p>
                         <p>QTY</p>
-                        <span className={styles.sales_info}><GoPackage /> To be packed</span>
+                        <span className={styles.sales_info}><GoPackage /> At hand</span>
                     </div>
                     <div className={styles.sales_analytics}>
-                        <p className={styles.sales_number}>51</p>
+                        <p className={styles.sales_number}>{ totalProducts ? totalProducts : 0}</p>
                         <p>QTY</p>
-                        <span className={styles.sales_info}><GoPackage /> To be packed</span>
+                        <span className={styles.sales_info}><GoPackage /> Total products</span>
                     </div>
                 </div>
             </div>
             <div className={styles.inventory_summary}>
                 <p className={styles.header}>Inventory Summary</p>
                 <div className={styles.summary_div}>
-                    <p>Quantity in Hand: <span className="font-bold float-right">1000</span></p>
-                    <p>Quantity to be received: <span className="font-bold float-right">100</span></p>
+                    <p>Quantity in Hand: <span className="font-bold float-right">{totalProductsAvailable ? totalProductsAvailable : 0}</span></p>
+                    <p>Quantity to be received: <span className="font-bold float-right">{purchasesToBeReceived ? purchasesToBeReceived : 0}</span></p>
                     <p>Quantity to be delivered: <span className="font-bold float-right">10</span></p>
                 </div>
             </div>
