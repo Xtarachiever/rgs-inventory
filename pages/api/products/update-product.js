@@ -13,6 +13,11 @@ export default async function handler(req,res){
             if(!findProduct){
                 return res.status(400).json({message: "No product Found"})
             }
+
+            if(quantity === 0){
+                await AddProduct.deleteOne({ _id: id });
+                return res.status(200).json({message: "Product deleted Successfully"})
+            }
             const updateFoundProducts = await AddProduct.findByIdAndUpdate(id,{productName, shortName, description, features, specifications, salesPrice, regularPrice, quantity},{new:true})
             return res.status(201).json({message:"Product Updated successfully",status:true, product: updateFoundProducts})
         }catch(err){

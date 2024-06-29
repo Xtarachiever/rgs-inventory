@@ -2,7 +2,7 @@ import connectMongo from "@/database/conn";
 import AddProduct from "@/models/AddProductSchema";
 
 export default async function handler(req,res){
-    connectMongo().catch((error)=>
+    await connectMongo().catch((error)=>
         res.json({message:'Connection Failed ...'}) 
     );
     if(req.method === "GET"){

@@ -54,7 +54,7 @@ const SinglePurchase = () => {
 
       useEffect(()=>{
         if(!openModal){
-          router.push("/dashboard")
+          router.push("/purchases")
         }
       },[openModal, router])
 

@@ -78,7 +78,7 @@ const SingleProduct = () => {
 
   useEffect(()=>{
     if(!openModal){
-      router.push("/dashboard")
+      router.push("/products")
     }
   },[openModal, router])
 

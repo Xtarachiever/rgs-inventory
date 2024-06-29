@@ -76,6 +76,10 @@ const Purchases = () => {
         accessor: "description",
       },
       {
+        Header: "Quantity",
+        accessor: "quantity",
+      },
+      {
         Header: "Purchase Price",
         accessor: "purchasePrice",
       },

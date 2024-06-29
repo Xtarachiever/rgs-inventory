@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 export default async function handler(req,res){
     if(req.method === "POST"){
-        connectMongo().catch((error)=>
+        await connectMongo().catch((error)=>
             res.json({message:'Connection Failed ...'})
         );
         try{
@@ -31,6 +31,7 @@ export default async function handler(req,res){
                 toast.error(err?.message)
                 return res.status(404).json({message: err?.message });
             });
+
         }catch(err){
             res.json({message:err?.message})
         }

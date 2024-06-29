@@ -3,7 +3,7 @@ import styles from './styles.module.css';
 const SelectInput = ({defaultName, options, onChange, name}) => {
   return (
     <div className={`${styles.select} w-full`}>
-        <select onChange={onChange} name={name}>
+        <select onChange={onChange} defaultValue={defaultName}>
             <option value={defaultName} disabled>
                 {defaultName}
             </option>
