@@ -5,14 +5,17 @@ import PurchaseHook from "@/hooks/PurchasesHook";
 import PurchaseModal from "@/component/products/PurchaseModal";
 import { ToastContainer, toast } from "react-toastify";
 import Table from "@/component/tables/Table";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { updatePurchases } from "@/store/slices/PurchaseSlice";
 const Purchases = () => {
   const router = useRouter();
   const [modal, setOpenModal] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   const purchases = useSelector((state)=>state.purchases.purchases)
-  // console.log(purchases)
+  
+  const dispatch = useDispatch();
   const {
     productName,
     quantity,
@@ -28,6 +31,7 @@ const Purchases = () => {
 
   const onSubmit = async (values) =>{
     try{
+      setLoading(true)
       const res = await fetch('/api/purchases/add',{
         method:'POST',
         body:JSON.stringify(values),
@@ -36,8 +40,10 @@ const Purchases = () => {
           "Content-Type": "application/json",
         },
       })
+      setLoading(false)
       if(res.ok){
-        toast.success("Purchases successfully retrieved")
+        setOpenModal(false)
+        dispatch(updatePurchases(values))
       }
     }catch(error){
       console.log(error)
@@ -131,6 +137,7 @@ const Purchases = () => {
             setOpenModal={setOpenModal}
             onSubmit={onSubmit}
             errors={errors}
+            loading={loading}
           />
         ) : (
           <></>

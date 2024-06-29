@@ -6,14 +6,17 @@ import Table from "@/component/tables/Table";
 import { useMemo } from "react";
 import AddProductHook from "@/hooks/AddProductHook";
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SearchButton from "@/component/reusable-search/SearchButton";
+import { updateProducts } from "@/store/slices/ProductSlice";
 
 const Products = () => {
   const [openModal, setOpenModal] = useState(false);
   const products = useSelector((state) => state.products.products);
   const [data, setData] = useState([]);
+  const [loadingData, setLoadingData] = useState(false)
   const router = useRouter();
+  const dispatch = useDispatch()
 
   const {
     salesPrice,
@@ -44,6 +47,7 @@ const Products = () => {
 
   const onSubmit = async (values) => {
     try {
+      setLoadingData(true)
       const res = await fetch("/api/products/add-product", {
         method: "POST",
         body: JSON.stringify(values),
@@ -52,10 +56,11 @@ const Products = () => {
           "Content-Type": "application/json",
         },
       });
+      setLoadingData(false)
       if (res.ok) {
-        toast.success("Product Successfully added");
-        reset();
         setOpenModal(false);
+        dispatch(updateProducts(values))
+        reset();
       }
       if (!res.ok) {
         toast.error(res.statusText);
@@ -68,6 +73,8 @@ const Products = () => {
   useEffect(() => {
     setData(products);
   }, [products]);
+
+  // console.log(data,products)
 
   const columns = useMemo(
     () => [
@@ -160,6 +167,7 @@ const Products = () => {
               handleValueChange={handleValueChange}
               onSubmit={onSubmit}
               quantity={quantity}
+              loading={loadingData}
             />
           ) : (
             <></>

@@ -10,6 +10,7 @@ const SingleProduct = () => {
   const router = useRouter();
 //   console.log(fetchData)
   const [openModal, setOpenModal] = useState(true);
+  const [loading, setLoading] = useState(false);
   const update= true;
 
   const {
@@ -31,6 +32,7 @@ const SingleProduct = () => {
 
   const onSubmit = async (values) => {
     try{
+      setLoading(true)
       if(values){
         const res = await fetch(`/api/products/update-product?id=${singleProduct?._id}`,{
           method:"PATCH",
@@ -49,7 +51,7 @@ const SingleProduct = () => {
             quantity:values.quantity,
           })
         })
-        console.log(res.json());
+        setLoading(false)
         if(res.ok){
           toast.success("Product successfully updated");
           reset();
@@ -66,7 +68,6 @@ const SingleProduct = () => {
       try{
         if(params?.slug){
           await fetchData(params?.slug);
-          // console.log(singleProduct)
         }
       }catch(err){
         console.log(err)
@@ -101,6 +102,7 @@ const SingleProduct = () => {
         reset={reset}
         update={update}
         quantity={quantity}
+        loading={loading}
       />
     </Layout>
   );

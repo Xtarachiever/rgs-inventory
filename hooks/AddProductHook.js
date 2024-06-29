@@ -42,7 +42,7 @@ const AddProductHook = () =>{
           }
           // setData(data?.products);
 
-        },[]);
+        },[dispatch]);
 
         useEffect(()=>{
           fetchProducts()

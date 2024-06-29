@@ -11,9 +11,12 @@ export const purchaseSlice = createSlice({
     reducers:{
         setPurchases(state,action){
             state.purchases = action.payload
-        }
+        },
+        updatePurchases(state,action){
+            state.purchases.push(action.payload)
+        },
     }
 })
 
-export const { purchases, setPurchases } = purchaseSlice.actions
+export const { purchases, setPurchases, updatePurchases } = purchaseSlice.actions
 export default purchaseSlice.reducer;

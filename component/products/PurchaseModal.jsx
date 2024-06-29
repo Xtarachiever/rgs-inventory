@@ -20,6 +20,7 @@ const PurchaseModal = ({
   params,
   onSubmit,
   setOpenModal,
+  loading
 }) => {
   return (
     <div className={styles.product_wrapper}>
@@ -133,7 +134,7 @@ const PurchaseModal = ({
             </div>
             <div className="mt-5 pt-6">
               <button type="submit" className="bg-primary px-4 py-2 text-white">
-                Submit
+                {loading ? 'Loading...' : 'Submit'}
               </button>
             </div>
           </form>

@@ -19,7 +19,8 @@ const Modal = ({
   reset,
   onSubmit,
   params,
-  update
+  update,
+  loading
 }) => {
   return (
     <div className={styles.product_wrapper}>
@@ -156,7 +157,9 @@ const Modal = ({
               type="submit"
               className="bg-primary px-4 py-2 mt-3 text-white"
             >
-              Submit
+              {
+                loading ? 'Loading...' : 'Submit'
+              }
             </button>
           </form>
         </div>

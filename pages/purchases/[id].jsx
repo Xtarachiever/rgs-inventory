@@ -13,9 +13,11 @@ const SinglePurchase = () => {
     const { fetchData, deliveryStatus, description, purchasePrice, vendorName, productName, quantity, billStatus, handleSubmit, handleValueChange, errors} = EditPurchaseHook();
 
     const [openModal, setOpenModal] = useState(true);
+    const [loading, setLoading] = useState(false)
 
     const onSubmit = async (values) =>{
         try{
+          setLoading(true)
           const res = await fetch(`/api/purchases/update-purchases?id=${params?.id}`,{
             method:"PATCH",
             headers: {
@@ -24,7 +26,7 @@ const SinglePurchase = () => {
             },
             body: JSON.stringify(values)
           });
-
+          setLoading(false)
           if(res.ok){
             toast.success(res?.message)
             router.push('/purchases')
@@ -42,7 +44,6 @@ const SinglePurchase = () => {
           try{
             if(params?.id){
               await fetchData(params?.id);
-              // console.log(singleProduct)
             }
           }catch(err){
             console.log(err)
@@ -73,6 +74,7 @@ const SinglePurchase = () => {
             setOpenModal={setOpenModal}
             onSubmit={onSubmit}
             errors={errors}
+            loading={loading}
           />
     </Layout>
   )

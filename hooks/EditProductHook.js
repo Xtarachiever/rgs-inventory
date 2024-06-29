@@ -3,9 +3,11 @@ import { AddProductValidator } from "./validators/add-product-validator";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 
 const EditProductHook = () =>{
     const [singleProduct, setSingleProduct] = useState([]);
+    const dispatch = useDispatch();
 
     const { 
         handleSubmit, 
@@ -33,7 +35,7 @@ const EditProductHook = () =>{
         })
         if(res.ok){
             const data = await res.json();
-            return setSingleProduct(data?.product)
+            setSingleProduct(data?.product)
         }else{
             toast.error('Something went wrong');
         }
