@@ -42,7 +42,7 @@ const SideBar = () => {
           : <></>
         }
         <br />
-        <Link href={""}>Sales</Link> <br />
+        <Link href={"/sales"}>Sales</Link> <br />
         <Link href={""}>Packages</Link> <br />
         <Link href={""}>Purchases</Link> <br />
         <p onClick={() => signOut()} className="flex items-center">

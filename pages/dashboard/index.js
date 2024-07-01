@@ -1,9 +1,13 @@
 import DashboardLayout from '@/component/Dashboard/DashboardLayout'
 import Layout from '@/component/Layout'
+import AddProductHook from '@/hooks/AddProductHook';
+import PurchaseHook from '@/hooks/PurchasesHook';
 import { getSession } from "next-auth/react";
 import { useSelector } from 'react-redux';
 
 const DashboardPage = () => {
+  const {loading } = PurchaseHook()
+  const {shortName } = AddProductHook()
   const products = useSelector((state)=>state.products.products)
   const purchases = useSelector((state)=>state.purchases.purchases)
 
