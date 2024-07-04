@@ -20,3 +20,11 @@ export const PurchaseValidator = object().shape({
     billStatus:string().trim().required('Bill Status is required'),
     deliveryStatus:string().trim().required('Delivery Status is required')
 });
+
+
+export const SalesValidator = object().shape({
+    productName: string().trim().required('Product Name is required'),
+    salesPrice: number().required('Sales Price is required'),
+    quantity: number().required('Quantity is required'),
+    customerName:string().trim().required("Customer's Name is required")
+});
