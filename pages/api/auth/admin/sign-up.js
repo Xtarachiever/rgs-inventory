@@ -3,7 +3,7 @@ import Users from "@/models/UserSchema";
 import { hash } from "bcrypt";
 
 export default async function handler(req, res) {
-    connectMongo().catch((error)=>
+    await connectMongo().catch((error)=>
         res.json({message:'Connection Failed ...'})
     )
     if(req.method === "POST"){
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
             const checkExistingUser = await Users.findOne({email: email});
 
             if(checkExistingUser){
-                return res.status(422).json({ message: "User Already Exists...!" });
+                return res.status(422).json({ status:false, message: "User Already Exists...!" });
             }
 
             Users.create({
@@ -27,7 +27,7 @@ export default async function handler(req, res) {
                   .json({ status: true, user: data });
               })
               .catch((err) => {
-                console.log(err)
+                console.log(err?.message)
                 return res.status(404).json({message: err?.message });
               });
         }catch(err){

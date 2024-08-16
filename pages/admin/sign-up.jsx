@@ -3,12 +3,15 @@ import PasswordInput from '@/component/inputs/PasswordInput'
 import TextInput from '@/component/inputs/TextInput'
 import SignUpHook from '@/hooks/SignUp'
 import RgsIcon from '@/public/assets/RgsIcon';
+import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 
 const SignUp = () => {
     const {handleValueChange, handleSubmit, email, lastName, firstName, password, confirmPassword, errors} = SignUpHook();
+    const [loading, setLoading] = useState(false)
     const onSubmit = async (values) =>{
         try{
+            setLoading(true)
             const res = await fetch('/api/auth/admin/sign-up',{
                 method:"POST",
                 headers: {
@@ -22,7 +25,13 @@ const SignUp = () => {
                     password:values.password
                 })
             })
-            console.log(res)
+            setLoading(false)
+            const data = await res.json();
+            if(!data?.status){
+                toast.error(data?.message)
+            }else{
+                toast.success('Registered Successfully')
+            }
         }catch(err){
             toast.error(err?.message);
             console.log(err?.message)
@@ -55,7 +64,9 @@ const SignUp = () => {
                     {errors?.confirmPassword && <p className="text-red-500">{errors?.confirmPassword?.message}</p>}
                 </div>
                 <button className="px-6 py-2 bg-primary text-white" type="submit">
-                    Sign Up
+                    {
+                        loading ? 'Loading...' : 'Sign Up'
+                    }
                 </button>
             </form>
         </div>

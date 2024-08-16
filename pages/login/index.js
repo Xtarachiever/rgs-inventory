@@ -6,18 +6,22 @@ import LoginHook from '@/hooks/LoginHook';
 import { signIn } from 'next-auth/react';
 import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 const Login = () => {
     const router = useRouter()
     const { email, password, handleValueChange, handleSubmit,errors } = LoginHook();
+    const [loading, setLoading] = useState(false);
 
-    const onSubmit = async (values) =>{
+    const onSubmit = async () =>{
+        setLoading(true)
         const status = await signIn('credentials',{
             callbackUrl:'/dashboard',
             redirect:false,
-            email: values.email,
-            password:values.password
+            email: email,
+            password:password
         });
+        setLoading(false)
         if(status.ok){
             router.push(status?.url);
             toast.success("Login Successful")
@@ -42,7 +46,9 @@ const Login = () => {
                         {errors?.password && <p className="text-red-500">{errors?.password?.message}</p>}
                     </div>
                     <button className="px-6 py-2 bg-primary text-white" type="submit">
-                        Login
+                        {
+                            loading ? 'Loading...' : 'Login'
+                        }
                     </button>
                 </div>
             </div>

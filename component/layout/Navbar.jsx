@@ -5,13 +5,14 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 import styles from './styles.module.css';
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseSharp } from "react-icons/io5";
+import Link from 'next/link';
 
 const Navbar = ({activeNav, setActiveNav}) => {
   return (
     <div className={`flex justify-between w-full p-6 px-10 items-center h-[100px] bg-white sticky top-0 z-10 shadow-xl gap-[20px] border-b border-gray ${styles.navBar}`}>
-        <div className="max-w-[300px] min-w-[100px]">
+        <Link className="max-w-[300px] min-w-[100px]" href={'/dashboard'}>
             <RgsIcon />
-        </div>
+        </Link>
         <div className={`max-w-[600px] w-full min-w-[300px] ${styles.search_input}`}>
             <SearchInput />
         </div>
