@@ -34,7 +34,9 @@ const SalesHook = () =>{
           const data = await res.json();
           dispatch(setSales(data?.sales))
 
-          toast.success(data?.message)
+          toast.success(data?.message,{
+            toastId:'Sales Success'
+          })
         }
       }catch(err){
         console.log(err)

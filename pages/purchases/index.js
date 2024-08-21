@@ -3,7 +3,7 @@ import SearchButton from "@/component/reusable-search/SearchButton";
 import { useEffect, useState, useMemo } from "react";
 import PurchaseHook from "@/hooks/PurchasesHook";
 import PurchaseModal from "@/component/products/PurchaseModal";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import Table from "@/component/tables/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
@@ -111,7 +111,7 @@ const Purchases = () => {
 
   return (
     <Layout>
-      <ToastContainer />
+      <ToastContainer limit={1}/>
       <div className="w-full">
         <SearchButton
           modal={modal}

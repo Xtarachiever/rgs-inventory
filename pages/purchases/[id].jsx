@@ -60,7 +60,7 @@ const SinglePurchase = () => {
 
   return (
     <Layout>
-        <ToastContainer />
+        <ToastContainer limit={1}/>
          <PurchaseModal
             handleSubmit={handleSubmit}
             handleValueChange={handleValueChange}

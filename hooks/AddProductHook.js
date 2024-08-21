@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useMemo, useEffect, useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setProducts } from "@/store/slices/ProductSlice";
-
+import { toast } from "react-toastify";
 const AddProductHook = () =>{
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -37,6 +37,9 @@ const AddProductHook = () =>{
             setLoading(false);
             const data = await res.json();
             dispatch(setProducts(data?.products));
+            toast.success(data?.message,{
+              toastId:'Product success'
+            })
           }else{
             console.log("An error occured")
           }

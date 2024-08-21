@@ -37,7 +37,9 @@ const PurchaseHook = () =>{
           const data = await res.json();
           dispatch(setPurchases(data?.purchases))
 
-          toast.success(data?.message)
+          toast.success(data?.message,{
+            toastId:'purchase successful'
+          })
         }
       }catch(err){
         console.log(err)
@@ -47,7 +49,7 @@ const PurchaseHook = () =>{
 
     useEffect(()=>{
       fetchData();
-    },[fetchData])
+    },[])
 
 
       const handleValueChange = (field,value) =>{
