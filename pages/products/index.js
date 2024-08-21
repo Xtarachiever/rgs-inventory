@@ -13,7 +13,10 @@ import { updateProducts } from "@/store/slices/ProductSlice";
 const Products = () => {
   const [openModal, setOpenModal] = useState(false);
   const products = useSelector((state) => state.products.products);
-  const [data, setData] = useState([]);
+
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [searchValue, setSearchValue] = useState('')
+
   const [loadingData, setLoadingData] = useState(false)
   const router = useRouter();
   const dispatch = useDispatch()
@@ -70,12 +73,6 @@ const Products = () => {
     }
   };
 
-  useEffect(() => {
-    setData(products);
-  }, [products]);
-
-  // console.log(data,products)
-
   const columns = useMemo(
     () => [
       {
@@ -128,6 +125,26 @@ const Products = () => {
     }
   }, [openModal]);
 
+  const handleProductSearch = (e) =>{
+    const inputValue = e.target.value.toLowerCase();
+    setSearchValue(inputValue);
+    const filteredResults = filteredProducts?.filter(({productName})=>{
+      return(
+        productName.toLowerCase().includes(inputValue)
+      )
+    })
+
+    if(inputValue !== ''){
+      setFilteredProducts(filteredResults)
+    }else{
+      setFilteredProducts(products)
+    }
+  }
+
+  useEffect(()=>{
+    setFilteredProducts(products)
+  },[products])
+
   return (
     <Layout>
       <ToastContainer />
@@ -139,13 +156,15 @@ const Products = () => {
             name={"search"}
             placeholder={"Search for Products..."}
             buttonName={"Add Products"}
+            value={searchValue}
+            onChange={(e)=>handleProductSearch(e)}
           />
           {loading ? (
-            <div className="loader">loading</div>
+            <div className="loader">Loading...</div>
           ) : (
             <div className="overflow-scroll mt-8">
-              {data ? (
-                <Table columns={columns} data={data} />
+              {(filteredProducts && filteredProducts?.length !== 0) ? (
+                <Table columns={columns} data={filteredProducts} />
               ) : (
                 <p>No product found</p>
               )}

@@ -30,9 +30,11 @@ const PurchaseHook = () =>{
 
     const fetchData = useCallback(async () =>{
       try{
+        setLoading(true)
         const res = await fetch('/api/purchases/get-purchases',{
           method:'GET'
         });
+        setLoading(false)
         if(res.ok){
           const data = await res.json();
           dispatch(setPurchases(data?.purchases))
@@ -75,7 +77,7 @@ const PurchaseHook = () =>{
         deliveryStatus,
         isSubmitting,
         errors:formState.errors,
-        loading
+        purchaseLoader:loading
     }
 }
 

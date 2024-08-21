@@ -3,15 +3,15 @@ import { IoSearchOutline } from "react-icons/io5"
 import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
 
-const SearchButton = ({name, placeholder, buttonName, modal, setOpenModal}) => {
+const SearchButton = ({name, value, placeholder, buttonName, onChange, setOpenModal}) => {
   return (
     <div className="flex-col sm:flex-row flex justify-around items-center gap-[20px]">
         <div className="w-[75%] relative">
         <TextInput
             placeholder={placeholder}
             name={name}
-            value={""}
-            onChange={() => {}}
+            value={value}
+            onChange={onChange}
         />
         <IoSearchOutline
             className={"absolute right-[15px] top-[24px]"}

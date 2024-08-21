@@ -11,9 +11,12 @@ import { updatePurchases } from "@/store/slices/PurchaseSlice";
 const Purchases = () => {
   const router = useRouter();
   const [modal, setOpenModal] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
-  const purchases = useSelector((state)=>state.purchases.purchases)
+  const purchases = useSelector((state)=>state.purchases.purchases);
+  const [searchValue, setSearchValue] = useState('')
+
+  const [filteredPurchases, setFilteredPurchases] = useState([])
   
   const dispatch = useDispatch();
   const {
@@ -27,6 +30,7 @@ const Purchases = () => {
     handleSubmit,
     handleValueChange,
     errors,
+    purchaseLoader
   } = PurchaseHook();
 
   const onSubmit = async (values) =>{
@@ -108,6 +112,27 @@ const Purchases = () => {
     []
   );
 
+  const handlePurchaseSearch = (e) =>{
+    const inputValue = e.target.value.toLowerCase();
+    setSearchValue(inputValue);
+    const filteredResults = filteredPurchases?.filter(({productName, vendorName})=>{
+      return(
+        productName.toLowerCase().includes(inputValue) || 
+        vendorName.toLowerCase().includes(inputValue)
+      )
+    })
+    
+    if(inputValue !== ''){
+      setFilteredPurchases(filteredResults)
+    }else{
+      setFilteredPurchases(purchases)
+    }
+  }
+
+  useEffect(()=>{
+    setFilteredPurchases(purchases)
+  },[purchases])
+
 
   return (
     <Layout>
@@ -117,14 +142,17 @@ const Purchases = () => {
           modal={modal}
           setOpenModal={setOpenModal}
           name={"search"}
-          placeholder={"Search for Products..."}
+          placeholder={"Search for Purchases..."}
           buttonName={"Add Purchases"}
+          value={searchValue}
+          onChange={(e)=>handlePurchaseSearch(e)}
         />
         <div className="overflow-scroll mt-8">
           {
-            purchases ? 
-            <Table data={purchases} columns={columns}/>
-            : <></>
+            purchaseLoader ? <p>Loading...</p> :
+            (filteredPurchases && filteredPurchases?.length !== 0) ? 
+            <Table data={filteredPurchases} columns={columns}/>
+            : <div>No Purchase Found</div>
           }
         </div>
         {modal ? (

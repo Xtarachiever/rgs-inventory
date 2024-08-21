@@ -27,9 +27,11 @@ const SalesHook = () =>{
 
     const fetchData = useCallback(async () =>{
       try{
+        setLoading(true)
         const res = await fetch('/api/sales/get-sales',{
           method:'GET'
         });
+        setLoading(false)
         if(res.ok){
           const data = await res.json();
           dispatch(setSales(data?.sales))

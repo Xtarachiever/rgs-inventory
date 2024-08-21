@@ -3,19 +3,24 @@ import SalesModal from "@/component/products/SalesModal";
 import SearchButton from "@/component/reusable-search/SearchButton";
 import SalesHook from "@/hooks/SalesHook";
 import { setSales, updateSales } from "@/store/slices/SaleSlice";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import Table from "@/component/tables/Table";
 import { useRouter } from "next/navigation";
 
 const Sales = () => {
-  const router = useRouter()
+  const router = useRouter();
+
+  const sales = useSelector((state)=>state.sales.sales);
+
   const [openModal, setOpenModal] = useState(false);
+  const [filteredSales, setFilteredSales] = useState(sales)
   const dispatch = useDispatch();
   const { productName, customerName, salesPrice, quantity, loading, handleSubmit, handleValueChange,setLoading } = SalesHook();
 
-  const sales = useSelector((state)=>state.sales.sales);
+
+  const [searchValue, setSearchValue] = useState('')
 
   const handleSalesUpdate = async (id) => {
     try {
@@ -85,16 +90,40 @@ const Sales = () => {
         toast.success(err?.message)
       }
   }
+
+  const handleSearchValue = (e) =>{
+    const inputValue = e.target.value.toLowerCase();
+    setSearchValue(inputValue)
+    const filteredData = filteredSales.filter(({customerName,productName})=>{
+      return (
+        customerName.toLowerCase().includes(inputValue) ||
+        productName.toLowerCase().includes(inputValue)
+      )
+    })
+    if(inputValue !== ''){
+      setFilteredSales(filteredData)
+    }else{
+      setFilteredSales(sales)
+    }
+  }
+
+  useEffect(()=>{
+    setFilteredSales(sales)
+  },[sales])
+
   return (
     <Layout>
       <ToastContainer />
       <div>
         <SearchButton
+          onChange={(e)=>handleSearchValue(e)}
+          value={searchValue}
           modal={openModal}
           setOpenModal={setOpenModal}
           name={"search"}
-          placeholder={"Search for Products..."}
+          placeholder={"Search for Sales..."}
           buttonName={"Record Sales"}
+          
         />
         {openModal ? (
           <SalesModal
@@ -112,9 +141,10 @@ const Sales = () => {
           <></>
         )}
         {
-          sales ? 
-          <Table data={sales} columns={columns}/>
-          : <></>
+          loading ? <p>Loading...</p> :
+          ((filteredSales && filteredSales?.length !== 0) ? 
+          <Table data={filteredSales} columns={columns}/>
+          : <div>No Sales Found</div>)
         }
       </div>
     </Layout>
