@@ -11,8 +11,13 @@ const recordSales = async (productName, quantitySold, salesPrice,customerName) =
     product.quantity -= quantitySold;
     if (product.quantity < 0) throw new Error("Insufficient stock");
 
-    // Save the updated product
-    await product.save();
+    if (product.quantity === 0) {
+        // If quantity is 0, delete the product from the database
+        await AddProduct.deleteOne({ _id: product._id });
+    } else {
+        // Save the updated product only if it's not deleted
+        await product.save();
+    }
 
     // Create a sales entry
     const sale = new Sales({

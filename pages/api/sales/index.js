@@ -1,6 +1,5 @@
 import connectMongo from "@/database/conn";
 import recordSales from "@/services/RecordSales";
-import { toast } from "react-toastify";
 
 
 export default async function handler(req,res){

@@ -2,17 +2,30 @@ import Layout from "@/component/Layout";
 import SalesModal from "@/component/products/SalesModal";
 import SearchButton from "@/component/reusable-search/SearchButton";
 import SalesHook from "@/hooks/SalesHook";
-import { setSales } from "@/store/slices/SaleSlice";
+import { setSales, updateSales } from "@/store/slices/SaleSlice";
 import { useState, useMemo } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import Table from "@/component/tables/Table";
+import { useRouter } from "next/navigation";
 
 const Sales = () => {
+  const router = useRouter()
   const [openModal, setOpenModal] = useState(false);
+  const dispatch = useDispatch();
   const { productName, customerName, salesPrice, quantity, loading, handleSubmit, handleValueChange,setLoading } = SalesHook();
 
-  const sales = useSelector((state)=>state.sales.sales)
+  const sales = useSelector((state)=>state.sales.sales);
+
+  const handleSalesUpdate = async (id) => {
+    try {
+      if (id) {
+        router.push(`/sales/${id}`);
+      }
+    } catch (error) {
+      console.error("Error updating product:", error);
+    }
+  };
 
   const columns = useMemo(
     () => [
@@ -38,7 +51,7 @@ const Sales = () => {
           return (
             <button
               className="update-product"
-              onClick={() => {}}
+              onClick={() => handleSalesUpdate(row.original._id)}
             >
               Update
             </button>
@@ -61,15 +74,14 @@ const Sales = () => {
           },
         });
         setLoading(false)
-        if(res.ok){
-          const data = await res.json();
+        const data = await res.json();
+        if(!res.ok){
+          toast.error(data?.message)
+        }else{
           setOpenModal(false)
-          dispatch(setSales(data?.sales))
-
-          toast.success(data?.message)
+          dispatch(updateSales(data?.sale))
         }
       }catch(err){
-        console.log(err)
         toast.success(err?.message)
       }
   }

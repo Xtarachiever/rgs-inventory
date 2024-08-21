@@ -70,7 +70,7 @@ const SideBar = () => {
             {isOpen[0] &&
               links?.map((subLinks) => {
                 return (
-                  <div className={isActive[subLinks?.link] ? "bg-primary text-white rounded-lg" : "hover:text-primary"}>
+                  <div key={subLinks?.link} className={isActive[subLinks?.link] ? "bg-primary text-white rounded-lg" : "hover:text-primary"}>
                     <Link href={subLinks?.link} key={subLinks?.link} onClick={() => handleLinkChange(subLinks?.link)} >
                       {subLinks?.title}
                     </Link>

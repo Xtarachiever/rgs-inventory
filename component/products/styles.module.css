@@ -16,6 +16,10 @@
     background-color: white;
     overflow-y: auto;
     height: 100%;
+    margin-top: 5px;
+    height: max-content;
+    padding: 10px;
+    padding-bottom: 70px;
 }
 
 .sales_wrapper{

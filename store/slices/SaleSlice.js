@@ -12,11 +12,11 @@ export const saleSlice = createSlice({
         setSales(state,action){
             state.sales = action.payload
         },
-        // updatePurchases(state,action){
-        //     state.purchases.push(action.payload)
-        // },
+        updateSales(state,action){
+            state.sales.push(action.payload)
+        },
     }
 })
 
-export const { sales, setSales } = saleSlice.actions
+export const { sales, setSales, updateSales } = saleSlice.actions
 export default saleSlice.reducer;

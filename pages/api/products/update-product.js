@@ -1,5 +1,6 @@
 import connectMongo from "@/database/conn";
 import AddProduct from "@/models/AddProductSchema";
+import Sales from "@/models/SaleSchema";
 
 export default async function handler(req,res){
     connectMongo().catch((error)=>
@@ -17,6 +18,18 @@ export default async function handler(req,res){
             if(quantity === 0){
                 await AddProduct.deleteOne({ _id: id });
                 return res.status(200).json({message: "Product deleted Successfully"})
+            }
+
+            // Updating Sales
+            if(findProduct && quantity !== findProduct?.quantity){
+                if(quantity <= findProduct?.quantity){
+                    await Sales.create({
+                        productName,
+                        quantity: findProduct?.quantity - quantity,
+                        salesPrice,
+                        customerName:'RGS'
+                    })
+                }
             }
             const updateFoundProducts = await AddProduct.findByIdAndUpdate(id,{productName, shortName, description, features, specifications, salesPrice, regularPrice, quantity},{new:true})
             return res.status(201).json({message:"Product Updated successfully",status:true, product: updateFoundProducts})
