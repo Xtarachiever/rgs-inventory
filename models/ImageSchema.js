@@ -2,34 +2,27 @@
 import { ObjectId } from "mongodb";
 import { Schema, model, models } from "mongoose";
 
-const addSaleSchema = new Schema({
+const productImageSchema = new Schema({
     id:{
         type: ObjectId
     },
-    productName:{
+    image:{
         type: String,
         required:true,
         trim:true
     },
-    quantity:{
-        type:Number,
+    title:{
+        type:String,
         required:true
     },
-    salesPrice:{
-        type: Number,
-        required:true,
-    },
-    customerName:{
+    productPic:{
         type: String,
         required:true,
-    },
-    profitLoss:{
-        type: String,
     }
 },
 { toJSON: { virtuals: true }, toObject: { virtuals: true }, timestamps: true }
 )
 
-const Sales = models.sales || model('sales',addSaleSchema)
+const Images = models.images || model('images',productImageSchema)
 
-export default Sales;
+export default Images;

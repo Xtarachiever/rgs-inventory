@@ -24,7 +24,8 @@ const recordSales = async (productName, quantitySold, salesPrice,customerName) =
         productName,
         quantity: quantitySold,
         salesPrice,
-        customerName
+        customerName,
+        profitLoss: salesPrice*quantitySold - product?.salesPrice*quantitySold
         // total: quantitySold * salesPrice
     });
     await sale.save();

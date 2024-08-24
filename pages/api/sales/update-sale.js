@@ -1,7 +1,6 @@
 import connectMongo from "@/database/conn";
 import AddProduct from "@/models/AddProductSchema";
 import Sales from "@/models/SaleSchema";
-
 export default async function handler(req, res) {
   await connectMongo().catch((error) =>
     res.json({ message: "Connection Failed ..." })
@@ -12,6 +11,10 @@ export default async function handler(req, res) {
       const { id } = req.query;
       const { productName, salesPrice, quantity, customerName } = req.body;
 
+      const product = await AddProduct.findOne({ productName });
+
+      if (!product) throw new Error("Product not found");
+
       // Fetch the purchase by id
       const findSales = await Sales.findById(id);
       if (!findSales) {
@@ -21,7 +24,7 @@ export default async function handler(req, res) {
       // Update the Purchase document
       const updateFoundSales = await Sales.findByIdAndUpdate(
         id,
-        { customerName, salesPrice, quantity, productName },
+        { customerName, salesPrice, quantity, productName, profitLoss: salesPrice*quantity - product?.salesPrice*quantity},
         { new: true }
       );
 

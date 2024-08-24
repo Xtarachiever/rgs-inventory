@@ -1,8 +1,35 @@
 import { GoPackage } from "react-icons/go";
 import styles from './styles.module.css';
 import { PieChart } from "../charts/PieChart";
+import { LineChart } from "../charts/LineChart";
+import { useSelector } from "react-redux";
+import SalesHook from "@/hooks/SalesHook";
+import { useState, useEffect } from "react";
+import { parseISO, format } from 'date-fns';
+
 const DashboardLayout = ({totalProductsAvailable,purchasesToBeReceived,noOfUnpaidProducts}) => {
+
+    const { loading } = SalesHook();
+
     const totalProducts = totalProductsAvailable + purchasesToBeReceived
+    const sales = useSelector((state)=>state.sales.sales);
+
+    const [dailySales, setDailySales] = useState({})
+
+    useEffect(() => {
+        const salesByDay = {};
+
+        sales.forEach(sale => {
+            const date = format(parseISO(sale.createdAt), 'yyyy-MM-dd');
+            if (!salesByDay[date]) {
+                salesByDay[date] = 0;
+            }
+            salesByDay[date] += parseInt(sale.profitLoss);
+        });
+
+        setDailySales(salesByDay);
+    }, [sales]);
+
   return (
     <div>
         <div className={`flex w-full justify-between ${styles.dashboard_container}`}>
@@ -74,6 +101,13 @@ const DashboardLayout = ({totalProductsAvailable,purchasesToBeReceived,noOfUnpai
                     </div>
                 </div>
             </div>
+        </div>
+        <div>
+            {
+                loading ? <div>Loading...</div> : sales?.length !== 0 ?
+                <LineChart sales={dailySales}/> :
+                <p>No data found</p>
+            }
         </div>
     </div>
   )

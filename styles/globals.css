@@ -97,6 +97,22 @@ body {
   padding: 5px 10px;
   border-radius: 3px;
 }
+
+.product_images{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 20px;
+}
+.product_images > div{
+  background-color: #d9d9d9;
+  padding: 10px;
+  padding-top: 20px;
+}
+.product_images > div:hover{
+  cursor: pointer;
+  scale: 1.02;
+  transition: all .2s ease-in-out;
+}
 @media screen and (max-width:750px) {
   .guest-page-container .img-container{
     display: none;
