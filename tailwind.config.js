@@ -82,7 +82,8 @@ module.exports = {
         lightGray:"rgba(235, 235, 235, 0.4)",
         teal:"#02B7AC",
         blueShade:"#216EFF",
-        bgLightBlack:"rgba(0, 0, 0, 0.4)"
+        bgLightBlack:"rgba(0, 0, 0, 0.4)",
+        bgLightBlack2:"rgba(0, 0, 0, 0.1)"
       },
     },
   },

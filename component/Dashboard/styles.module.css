@@ -23,11 +23,23 @@
 .top_products{
     width: 45%;
 }
-.products_details .products_details_div,
-.top_products .top_products_div{
+.products_details .products_details_div{
     padding: 10px;
     display: flex;
     justify-content: space-around;
+}
+.top_products .top_products_div{
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    gap: 30px;
+    margin: auto;
+    align-items: center;
+}
+.top_products .top_products_div img{
+    margin: auto;
+    width: 100px;
 }
 .products_details .products_details_div .products_detail p{
     padding: 10px;
@@ -84,6 +96,7 @@
 }
 .products_details_container{
     display: flex;
+    align-items: flex-start;
 }
 @media screen and (max-width:1320px) and (min-width:1100px){
     .sales_table .sales_analytics::after{

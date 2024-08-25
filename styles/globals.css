@@ -104,15 +104,43 @@ body {
   gap: 20px;
 }
 .product_images > div{
-  background-color: #d9d9d9;
+  /* background-color: #d9d9d9; */
   padding: 10px;
   padding-top: 20px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .product_images > div:hover{
   cursor: pointer;
   scale: 1.02;
   transition: all .2s ease-in-out;
 }
+.images_container .delete_images{
+  display: none;
+}
+.images_container:hover .delete_images{
+  display: block;
+}
+
+/* Loader */
+/* HTML: <div class="loader"></div> */
+.loader {
+  color: #0A9F4D;
+  width: 4px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  box-shadow: 19px 0 0 7px, 38px 0 0 3px, 57px 0 0 0;
+  transform: translateX(-38px);
+  animation: l21 .5s infinite alternate linear;
+  position: relative;
+  top: 80px;
+  margin: auto;
+}
+
+@keyframes l21 {
+  50%  {box-shadow: 19px 0 0 3px, 38px 0 0 7px, 57px 0 0 3px}
+  100% {box-shadow: 19px 0 0 0  , 38px 0 0 3px, 57px 0 0 7px}
+}
+
 @media screen and (max-width:750px) {
   .guest-page-container .img-container{
     display: none;

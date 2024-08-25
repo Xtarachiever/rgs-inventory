@@ -149,7 +149,7 @@ const Purchases = () => {
         />
         <div className="overflow-scroll mt-8">
           {
-            purchaseLoader ? <p>Loading...</p> :
+            purchaseLoader ? <div className="loader"></div> :
             (filteredPurchases && filteredPurchases?.length !== 0) ? 
             <Table data={filteredPurchases} columns={columns}/>
             : <div>No Purchase Found</div>

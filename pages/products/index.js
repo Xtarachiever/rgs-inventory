@@ -149,7 +149,7 @@ const Products = () => {
     <Layout>
       <ToastContainer />
       <div className="overflow-hidden">
-        <div>
+        <div className="min-h-[100vh]">
           <SearchButton
             modal={openModal}
             setOpenModal={setOpenModal}
@@ -160,7 +160,7 @@ const Products = () => {
             onChange={(e)=>handleProductSearch(e)}
           />
           {loading ? (
-            <div className="loader">Loading...</div>
+            <div className="loader"></div>
           ) : (
             <div className="overflow-scroll mt-8">
               {(filteredProducts && filteredProducts?.length !== 0) ? (

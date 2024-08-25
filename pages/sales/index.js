@@ -141,7 +141,7 @@ const Sales = () => {
           <></>
         )}
         {
-          loading ? <p>Loading...</p> :
+          loading ? <div className="loader"></div> :
           ((filteredSales && filteredSales?.length !== 0) ? 
           <Table data={filteredSales} columns={columns}/>
           : <div>No Sales Found</div>)

@@ -7,6 +7,7 @@ import SalesHook from "@/hooks/SalesHook";
 import { useState, useEffect } from "react";
 import { parseISO, format } from 'date-fns';
 
+
 const DashboardLayout = ({totalProductsAvailable,purchasesToBeReceived,noOfUnpaidProducts}) => {
 
     const { loading } = SalesHook();
@@ -15,6 +16,12 @@ const DashboardLayout = ({totalProductsAvailable,purchasesToBeReceived,noOfUnpai
     const sales = useSelector((state)=>state.sales.sales);
 
     const [dailySales, setDailySales] = useState({})
+
+    const [topProducts, setTopProducts] = useState([])
+    const [pieData, setPieData] = useState([]);
+    const [images, setImages] = useState([]);
+
+    const [imagesLoading,setImagesLoading] = useState(false)
 
     useEffect(() => {
         const salesByDay = {};
@@ -29,6 +36,61 @@ const DashboardLayout = ({totalProductsAvailable,purchasesToBeReceived,noOfUnpai
 
         setDailySales(salesByDay);
     }, [sales]);
+
+    const getProductImages = async () => {
+        try {
+            setImagesLoading(true)
+          const res = await fetch("/api/products/get-product-images/", {
+            method: "GET",
+          });
+          setImagesLoading(false)
+          const data = await res.json();
+          setImages(data?.images)
+        } catch (err) {
+          console.log(err);
+        }
+      };
+
+      useEffect(()=>{
+        getProductImages()
+      },[])
+
+    useEffect(()=>{
+        const topProducts = {};
+        
+        sales?.forEach((sale)=>{
+            const productName = sale?.productName;
+            const productPic = images.find(({ title: dataProductName }) => dataProductName === productName)?.productPic;
+            if(!topProducts[productName]){
+                topProducts[productName] = {
+                    quantity: sale?.quantity,
+                    productPic: productPic || null 
+                }
+            }else{
+                topProducts[productName].quantity += sale?.quantity;
+            }
+        })
+        const sortedObj = Object.entries(topProducts).sort(([, valueA], [, valueB])=> valueB - valueA)
+        const topThreeEntries = sortedObj.slice(0, 3);
+        setTopProducts(Object.fromEntries(topThreeEntries))
+        // sales.forEach((sale)=>sale.sort((a,b)=> a-b))   
+    },[sales])
+
+
+    const products = useSelector((state)=>state.products.products)
+
+    useEffect(()=>{
+       const cumulativeProduct = {};
+       products?.map((product)=>{
+        const productName = product?.productName
+
+        if(!cumulativeProduct[productName]){
+            cumulativeProduct[productName] = (product?.quantity/totalProductsAvailable).toFixed(2)
+        }
+       })
+       setPieData(cumulativeProduct)
+    },[products])
+
 
   return (
     <div>
@@ -67,48 +129,48 @@ const DashboardLayout = ({totalProductsAvailable,purchasesToBeReceived,noOfUnpai
                 </div>
             </div>
         </div>
-        <div className={`mt-10 gap-[20px] ${styles.products_details_container}`}>
-            <div className={styles.products_details}>
-                <p className={styles.header}>Product Details</p>
-                <div className={`flex items-center ${styles.products_details_div}`}>
-                    <div className={styles.products_detail}>
-                        <p>Low Stock Items: <span>22</span></p>
-                        <p>Low Stock Items: <span>22</span></p>
-                        <p>Low Stock Items: <span>22</span></p>
+        {
+            imagesLoading ? <div className="loader"></div> :
+            <div>
+                <div className={`mt-10 gap-[20px] ${styles.products_details_container}`}>
+                    <div className={styles.products_details}>
+                        <p className={styles.header}>Product Details</p>
+                        <div className={`flex items-center ${styles.products_details_div}`}>
+                            <div className="min-w-[200px]">
+                                <PieChart data={pieData}/>
+                            </div>
+                        </div>
                     </div>
-                    <div className="w-[40%] min-w-[200px]">
-                        <PieChart />
+                    <div className={styles.top_products}>
+                        <p className={styles.header}>Top 3 Products for the week</p>
+                        {
+                            Object.entries(topProducts)?.length !== 0
+                            ?
+                            <div className={styles.top_products_div}>
+                                {
+                                    Object.entries(topProducts).map(([key,value])=>(
+                                        <div key={key}>
+                                            <img src={value?.productPic ? value?.productPic : '/favicon.ico'} alt="default image" className=""/>
+                                            <p className="py-2">{key}</p>
+                                            <p>{value?.quantity}</p>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                            :
+                            <p>No product to show</p>
+                        }
                     </div>
                 </div>
-            </div>
-            <div className={styles.top_products}>
-                <p className={styles.header}>Top 3 Products for the week</p>
-                <div className={styles.top_products_div}>
-                    <div className="text-center">
-                        <img src="./favicon.ico" alt="default image" className="w-[70px]"/>
-                        <p>Coffee Table</p>
-                        <p>20ltrs</p>
-                    </div>
-                    <div className="text-center">
-                        <img src="./favicon.ico" alt="default image" className="w-[70px]"/>
-                        <p>Coffee Table</p>
-                        <p>20ltrs</p>
-                    </div>
-                    <div className="text-center">
-                        <img src="./favicon.ico" alt="default image" className="w-[70px]"/>
-                        <p>Coffee Table</p>
-                        <p>20ltrs</p>
-                    </div>
+                <div className="mt-4 py-6">
+                    {
+                        loading ? <div className="loader"></div> : sales?.length !== 0 ?
+                        <LineChart sales={dailySales}/> :
+                        <p>No data found</p>
+                    }
                 </div>
             </div>
-        </div>
-        <div>
-            {
-                loading ? <div>Loading...</div> : sales?.length !== 0 ?
-                <LineChart sales={dailySales}/> :
-                <p>No data found</p>
-            }
-        </div>
+        }
     </div>
   )
 }

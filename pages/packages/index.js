@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import { BsUpload } from "react-icons/bs";
 import { VscChromeClose } from "react-icons/vsc";
 import { ToastContainer, toast } from "react-toastify";
+import { RiDeleteBin5Line } from "react-icons/ri";
 
 const Packages = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -96,6 +97,22 @@ const Packages = () => {
       toast.error(err?.message);
     }
   };
+
+  const handleImageDeletion = async (id) =>{
+    try{
+      const res = await fetch(`/api/products/delete-image?id=${id}`,{
+        method:"DELETE"
+      })
+      const data = await res.json();
+      if(data?.status){
+        toast.success(data?.message);
+        window.location.reload();
+      }
+    }catch(err){
+      console.log(err)
+    }
+  }
+
   return (
     <Layout>
       <div className="">
@@ -107,25 +124,32 @@ const Packages = () => {
           openModal={openModal}
           setOpenModal={setOpenModal}
         />
-        <div className="product_images mt-4 pt-8">
+        <div>
           {
             imagesLoading ? (
-              "Loading..."
+              <div className="loader"></div>
             ) : !loading && packages?.length === 0 ? (
               <p>No image Found</p>
             ) : packages?.length !== 0 ? (
-              packages?.map(({ productPic, title, _id }) => (
-                <div key={_id}>
-                  <div className="text-center max-w-[250px] h-[200px] overflow-hidden m-auto">
-                    <img
-                      src={productPic}
-                      alt="product"
-                      className="w-full h-[70%] object-contain"
-                    />
-                    <p className="py-3">{title}</p>
-                  </div>
-                </div>
-              ))
+              <div className="product_images mt-4 pt-8">
+                {
+                  packages?.map(({ productPic, title, _id }) => (
+                    <div key={_id} className="relative images_container">
+                      <div className="text-center max-w-[250px] h-[200px] overflow-hidden m-auto">
+                        <img
+                          src={productPic}
+                          alt="product"
+                          className="w-full h-[70%] object-contain"
+                        />
+                        <p className="py-3">{title}</p>
+                      </div>
+                      <div className="absolute left-0 py-4 top-0 h-full bg-bgLightBlack2 w-full delete_images" onClick={()=>handleImageDeletion(_id)}>
+                        <RiDeleteBin5Line className="m-auto translate-y-[70px]" fontSize={'1.7rem'} color="white"/>
+                      </div>
+                    </div>
+                ))
+                }
+              </div>
             ) : (
               <p>Something went wrong, please try again.</p>
             ) // Default fallback
