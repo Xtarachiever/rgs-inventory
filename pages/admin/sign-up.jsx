@@ -3,12 +3,15 @@ import PasswordInput from '@/component/inputs/PasswordInput'
 import TextInput from '@/component/inputs/TextInput'
 import SignUpHook from '@/hooks/SignUp'
 import RgsIcon from '@/public/assets/RgsIcon';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 
 const SignUp = () => {
     const {handleValueChange, handleSubmit, email, lastName, firstName, password, confirmPassword, errors} = SignUpHook();
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
+
+    const route = useRouter();
     const onSubmit = async (values) =>{
         try{
             setLoading(true)
@@ -31,6 +34,7 @@ const SignUp = () => {
                 toast.error(data?.message)
             }else{
                 toast.success('Registered Successfully')
+                route.push('/login')
             }
         }catch(err){
             toast.error(err?.message);

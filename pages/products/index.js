@@ -147,7 +147,7 @@ const Products = () => {
 
   return (
     <Layout>
-      <ToastContainer />
+      <ToastContainer limit={1}/>
       <div className="overflow-hidden">
         <div className="min-h-[100vh]">
           <SearchButton

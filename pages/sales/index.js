@@ -113,7 +113,7 @@ const Sales = () => {
 
   return (
     <Layout>
-      <ToastContainer />
+      <ToastContainer limit={1}/>
       <div>
         <SearchButton
           onChange={(e)=>handleSearchValue(e)}

@@ -130,7 +130,7 @@ const DashboardLayout = ({totalProductsAvailable,purchasesToBeReceived,noOfUnpai
             </div>
         </div>
         {
-            imagesLoading ? <div className="loader"></div> :
+            imagesLoading && sales?.length !== 0 ? <div className="loader"></div> :
             <div>
                 <div className={`mt-10 gap-[20px] ${styles.products_details_container}`}>
                     <div className={styles.products_details}>

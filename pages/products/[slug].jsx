@@ -84,7 +84,7 @@ const SingleProduct = () => {
 
   return (
     <Layout>
-      <ToastContainer />
+      <ToastContainer limit={1}/>
       <Modal
         setOpenModal={setOpenModal}
         regularPrice={regularPrice}

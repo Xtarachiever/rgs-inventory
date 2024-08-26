@@ -116,7 +116,7 @@ const Packages = () => {
   return (
     <Layout>
       <div className="">
-        <ToastContainer />
+        <ToastContainer limit={1}/>
         <SearchButton
           name={"images"}
           buttonName={"Add Images"}
