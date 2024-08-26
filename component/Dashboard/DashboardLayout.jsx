@@ -61,7 +61,6 @@ const DashboardLayout = ({totalProductsAvailable,purchasesToBeReceived,noOfUnpai
         sales?.forEach((sale)=>{
             const productName = sale?.productName;
             const productPic = images.find(({ title: dataProductName }) => dataProductName === productName)?.productPic;
-            console.log('images',images, productPic)
             if(!topProducts[productName]){
                 topProducts[productName] = {
                     quantity: sale?.quantity,
