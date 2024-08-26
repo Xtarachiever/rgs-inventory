@@ -8,6 +8,7 @@ import { BsUpload } from "react-icons/bs";
 import { VscChromeClose } from "react-icons/vsc";
 import { ToastContainer, toast } from "react-toastify";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import { getSession } from "next-auth/react";
 
 const Packages = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -241,3 +242,19 @@ const Packages = () => {
 };
 
 export default Packages;
+
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req });
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: { session },
+  };
+}

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import Table from "@/component/tables/Table";
 import { useRouter } from "next/navigation";
+import { getSession } from "next-auth/react";
 
 const Sales = () => {
   const router = useRouter();
@@ -152,3 +153,19 @@ const Sales = () => {
 };
 
 export default Sales;
+
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req });
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: { session },
+  };
+}

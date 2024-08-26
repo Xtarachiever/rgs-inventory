@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import SearchButton from "@/component/reusable-search/SearchButton";
 import { updateProducts } from "@/store/slices/ProductSlice";
-
+import { getSession } from "next-auth/react";
 const Products = () => {
   const [openModal, setOpenModal] = useState(false);
   const products = useSelector((state) => state.products.products);
@@ -198,3 +198,19 @@ const Products = () => {
 };
 
 export default Products;
+
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req });
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: { session },
+  };
+}

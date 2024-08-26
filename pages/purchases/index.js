@@ -8,6 +8,8 @@ import Table from "@/component/tables/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { updatePurchases } from "@/store/slices/PurchaseSlice";
+import { getSession } from "next-auth/react";
+
 const Purchases = () => {
   const router = useRouter();
   const [modal, setOpenModal] = useState(false);
@@ -180,3 +182,19 @@ const Purchases = () => {
 };
 
 export default Purchases;
+
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req });
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: { session },
+  };
+}
