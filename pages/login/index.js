@@ -34,8 +34,8 @@ const Login = () => {
     <div className='login_bg'>
         <ToastContainer />
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="bg-white/50 max-w-[600px] m-auto w-[60%] relative top-[100px] shadow-2xl m-auto rounded-sm py-10 p-4 text-center pt-10">
-                <RgsIcon className="m-auto"/>
+            <div className="bg-white/50 max-w-[600px] m-auto w-[85%] sm:w-[60%] relative top-[100px] shadow-2xl rounded-sm py-10 p-4 text-center pt-10 ">
+                <RgsIcon className="m-auto cursor-pointer" onClick={()=>router.push('/')}/>
                 <div className="w-[80%] m-auto">
                     <div className="pt-5">
                         <TextInput placeholder={'Email'} value={email} onChange={(e)=>handleValueChange('email',e.target.value)} name={email}/>
