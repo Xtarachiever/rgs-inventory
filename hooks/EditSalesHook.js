@@ -33,7 +33,7 @@ const EditSalesHook = () =>{
           setSingleSale(data?.sale)
         }
       }catch(err){
-        toast.success(err?.message)
+        toast.error(err?.message)
       }
     },[])
 

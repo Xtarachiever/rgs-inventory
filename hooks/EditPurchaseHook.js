@@ -32,7 +32,6 @@ const EditPurchaseHook = () =>{
         })
         if(res.ok){
             const data = await res.json();
-            toast.success('Success');
             setSinglePurchase(data?.purchase)
         }else{
             toast.error('Something went wrong');

@@ -38,10 +38,6 @@ const PurchaseHook = () =>{
         if(res.ok){
           const data = await res.json();
           dispatch(setPurchases(data?.purchases))
-
-          toast.success(data?.message,{
-            toastId:'purchase successful'
-          })
         }
       }catch(err){
         console.log(err)
