@@ -27,12 +27,10 @@ const addProductSchema = new Schema({
     },
     features:{
         type: String,
-        required:true,
         trim:true
     },
     specifications:{
         type: String,
-        required:true,
         trim:true
     },
     salesPrice:{
