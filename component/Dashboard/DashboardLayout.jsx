@@ -75,7 +75,7 @@ const DashboardLayout = ({totalProductsAvailable,purchasesToBeReceived,noOfUnpai
         const topThreeEntries = sortedObj.slice(0, 3);
         setTopProducts(Object.fromEntries(topThreeEntries))
         // sales.forEach((sale)=>sale.sort((a,b)=> a-b))   
-    },[sales])
+    },[sales,images])
 
     const products = useSelector((state)=>state.products.products)
 
