@@ -76,6 +76,8 @@ const DashboardLayout = ({totalProductsAvailable,purchasesToBeReceived,noOfUnpai
         // sales.forEach((sale)=>sale.sort((a,b)=> a-b))   
     },[sales])
 
+    console.log(topProducts)
+
     const products = useSelector((state)=>state.products.products)
 
     useEffect(()=>{
