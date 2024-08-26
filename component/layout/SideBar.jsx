@@ -8,10 +8,14 @@ import { IoIosArrowUp } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { SideBarContent } from "./SideBarContent";
+import { useSession } from "next-auth/react";
+
 const SideBar = () => {
   const route = useRouter();
   const [isOpen, setIsOpen] = useState([false, false, false]);
   const [isActive, setIsActive] = useState({});
+
+  const {data:session} = useSession();
 
   const handleToggle = (index) => {
     const updateState = [...isOpen];
@@ -43,7 +47,7 @@ const SideBar = () => {
   return (
     <div className="fixed bg-white z-2 p-4 w-[250px] h-[100vh] border-r border-gray shadow-xl">
       <p className="flex mt-4">
-        <FaUserCircle fontSize="1.7rem" className="mr-4" /> testing tintung
+        <FaUserCircle fontSize="1.7rem" className="mr-4" />{session?.user?.firstName} {" "} {session?.user?.lastName}
       </p>
       <div className={`pt-4 ${styles.sidebar_links}`}>
         {SideBarContent.map(({ title, link, arrow, links }) => (
