@@ -76,7 +76,6 @@ const DashboardLayout = ({totalProductsAvailable,purchasesToBeReceived,noOfUnpai
         // sales.forEach((sale)=>sale.sort((a,b)=> a-b))   
     },[sales])
 
-
     const products = useSelector((state)=>state.products.products)
 
     useEffect(()=>{
@@ -90,7 +89,6 @@ const DashboardLayout = ({totalProductsAvailable,purchasesToBeReceived,noOfUnpai
        })
        setPieData(cumulativeProduct)
     },[products])
-
 
   return (
     <div>
@@ -130,7 +128,8 @@ const DashboardLayout = ({totalProductsAvailable,purchasesToBeReceived,noOfUnpai
             </div>
         </div>
         {
-            imagesLoading && sales?.length !== 0 ? <div className="loader"></div> :
+            imagesLoading ? <div className="loader"></div> :
+            sales?.length !== 0 ?
             <div>
                 <div className={`mt-10 gap-[20px] ${styles.products_details_container}`}>
                     <div className={styles.products_details}>
@@ -169,7 +168,7 @@ const DashboardLayout = ({totalProductsAvailable,purchasesToBeReceived,noOfUnpai
                         <p>No data found</p>
                     }
                 </div>
-            </div>
+            </div> : <div>No Product to display</div>
         }
     </div>
   )
