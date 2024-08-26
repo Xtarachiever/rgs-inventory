@@ -109,7 +109,9 @@ const Packages = () => {
       const data = await res.json();
       if(data?.status){
         toast.success(data?.message);
-        router.reload();
+        setPackages((prevPackages) =>
+          prevPackages.filter((pkg) => pkg._id !== id)
+        );
       }
     }catch(err){
       console.log(err)
