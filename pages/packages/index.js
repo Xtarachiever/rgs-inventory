@@ -9,12 +9,14 @@ import { VscChromeClose } from "react-icons/vsc";
 import { ToastContainer, toast } from "react-toastify";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { getSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const Packages = () => {
   const [openModal, setOpenModal] = useState(false);
   const [preview, setPreview] = useState("");
   const [imageFile, setImageFile] = useState();
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const [imagesLoading, setImagesLoading] = useState(false)
 
@@ -107,7 +109,7 @@ const Packages = () => {
       const data = await res.json();
       if(data?.status){
         toast.success(data?.message);
-        window.location.reload();
+        router.reload();
       }
     }catch(err){
       console.log(err)
