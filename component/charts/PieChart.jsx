@@ -8,7 +8,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
       labels: Object.entries(data).map(([key]) => key),
       datasets: [{
         data: Object.entries(data).map(([, value]) => value),
-        backgroundColor: ['#0A9F4D', '#36A2EB', '#FFCE56','#FF484E']
+        backgroundColor: ['#0A9F4D', '#36A2EB', '#FFCE56','#CFFF9F','#FF484E']
       }],
     };
 

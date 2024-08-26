@@ -70,7 +70,7 @@ const DashboardLayout = ({totalProductsAvailable,purchasesToBeReceived,noOfUnpai
                 topProducts[productName].quantity += sale?.quantity;
             }
         })
-        const sortedObj = Object.entries(topProducts).sort(([, valueA], [, valueB])=> valueB - valueA)
+        const sortedObj = Object.entries(topProducts).sort(([, valueA], [, valueB])=> valueB?.quantity - valueA?.quantity)
         const topThreeEntries = sortedObj.slice(0, 3);
         setTopProducts(Object.fromEntries(topThreeEntries))
         // sales.forEach((sale)=>sale.sort((a,b)=> a-b))   

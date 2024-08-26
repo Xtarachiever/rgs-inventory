@@ -26,7 +26,7 @@
 .products_details .products_details_div{
     padding: 10px;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
 }
 .top_products .top_products_div{
     padding: 25px;
