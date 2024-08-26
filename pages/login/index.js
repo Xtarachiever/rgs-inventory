@@ -31,7 +31,7 @@ const Login = () => {
         }
     }
   return (
-    <Layout>
+    <Layout navLink={'/'}>
         <ToastContainer />
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="bg-white max-w-[600px] m-auto w-[60%] shadow-2xl m-auto rounded-sm py-10 p-4 text-center mt-10 border-primary border">

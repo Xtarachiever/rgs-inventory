@@ -24,7 +24,8 @@ body {
 .guest-page-container{
   width: 80%;
   border: 3px solid #0A9F4D;
-  min-height: 90vh;
+  height: 90vh;
+  max-height: 800px;
   margin: auto;
   border-radius: 20px;
   display: grid;

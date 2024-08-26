@@ -4,13 +4,13 @@ import Footer from './layout/Footer'
 import SideBar from './layout/SideBar';
 import { usePathname } from 'next/navigation';
 
-const Layout = ({children}) => {
+const Layout = ({children, navLink}) => {
     const params = usePathname();
     const [activeNav, setActiveNav] = useState(false);
     const excludedPaths = ['/login','/','/admin/sign-up']
   return (
     <div className="w-full relative">
-        <Navbar activeNav={activeNav} setActiveNav={setActiveNav}/>
+        <Navbar activeNav={activeNav} setActiveNav={setActiveNav} navLink={navLink}/>
         <div className="min-h-[100vh]">
             {
                 !excludedPaths.includes(params) ?
