@@ -142,6 +142,28 @@ body {
   100% {box-shadow: 19px 0 0 0  , 38px 0 0 3px, 57px 0 0 7px}
 }
 
+
+/* Login bg */
+.login_bg{
+  background: linear-gradient(-45deg, #0A9F4D, #49DB8A, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  height: 100vh;
+}
+
+@keyframes gradient {
+  0% {
+      background-position: 0% 50%;
+  }
+
+  50% {
+      background-position: 100% 50%;
+  }
+
+  100% {
+      background-position: 0% 50%;
+  }
+}
 @media screen and (max-width:750px) {
   .guest-page-container .img-container{
     display: none;

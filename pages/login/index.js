@@ -31,10 +31,10 @@ const Login = () => {
         }
     }
   return (
-    <Layout navLink={'/'}>
+    <div className='login_bg'>
         <ToastContainer />
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="bg-white max-w-[600px] m-auto w-[60%] shadow-2xl m-auto rounded-sm py-10 p-4 text-center mt-10 border-primary border">
+            <div className="bg-white/50 max-w-[600px] m-auto w-[60%] relative top-[100px] shadow-2xl m-auto rounded-sm py-10 p-4 text-center pt-10">
                 <RgsIcon className="m-auto"/>
                 <div className="w-[80%] m-auto">
                     <div className="pt-5">
@@ -53,7 +53,7 @@ const Login = () => {
                 </div>
             </div>
         </form>
-    </Layout>
+    </div>
   )
 }
 
