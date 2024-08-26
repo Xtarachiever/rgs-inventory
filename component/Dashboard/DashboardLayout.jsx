@@ -61,6 +61,7 @@ const DashboardLayout = ({totalProductsAvailable,purchasesToBeReceived,noOfUnpai
         sales?.forEach((sale)=>{
             const productName = sale?.productName;
             const productPic = images.find(({ title: dataProductName }) => dataProductName === productName)?.productPic;
+            console.log('images',images, productPic)
             if(!topProducts[productName]){
                 topProducts[productName] = {
                     quantity: sale?.quantity,
@@ -72,12 +73,9 @@ const DashboardLayout = ({totalProductsAvailable,purchasesToBeReceived,noOfUnpai
         })
         const sortedObj = Object.entries(topProducts).sort(([, valueA], [, valueB])=> valueB - valueA)
         const topThreeEntries = sortedObj.slice(0, 3);
-        console.log('topThreeEnties',topThreeEntries)
         setTopProducts(Object.fromEntries(topThreeEntries))
         // sales.forEach((sale)=>sale.sort((a,b)=> a-b))   
     },[sales])
-
-    console.log(topProducts)
 
     const products = useSelector((state)=>state.products.products)
 
