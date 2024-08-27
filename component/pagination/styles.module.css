@@ -1,0 +1,28 @@
+/* Pagination styling */
+.nextClassName,
+.previousClassName{
+  border: 1px solid gray;
+  display: inline;
+  padding: 3px 5px;
+  border-radius: 3px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.containerClassName{
+    display: flex;
+    align-items: center;
+}
+.pageLinkClassName{
+    padding: 8px;
+}
+.activeClassName{
+    background-color: #0A9F4D;
+    color: white;
+    margin-left: 8px;
+    margin-right: 8px;
+    padding: 7px 5px;
+}
+.disabledClassName{
+    cursor: not-allowed;
+}
+/* End of Paginate styling */

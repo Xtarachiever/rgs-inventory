@@ -9,6 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import Table from "@/component/tables/Table";
 import { useRouter } from "next/navigation";
 import { getSession } from "next-auth/react";
+import Paginate from "@/component/pagination/Paginate";
 
 const Sales = () => {
   const router = useRouter();
@@ -22,6 +23,13 @@ const Sales = () => {
 
 
   const [searchValue, setSearchValue] = useState('')
+
+  const [itemsOffSet, setItemOffset] = useState(0)
+
+
+  const limit = 5
+  const endItemOffSet = itemsOffSet + limit;
+  const currentItems = filteredSales.slice(itemsOffSet,endItemOffSet)
 
   const handleSalesUpdate = async (id) => {
     try {
@@ -141,12 +149,17 @@ const Sales = () => {
         ) : (
           <></>
         )}
+        <div className="overflow-scroll mt-8">
         {
           loading ? <div className="loader"></div> :
           ((filteredSales && filteredSales?.length !== 0) ? 
-          <Table data={filteredSales} columns={columns}/>
+          <div>
+            <Table data={currentItems} columns={columns}/>
+            <Paginate items={filteredSales} itemsPerPage={limit} totalItems={filteredSales?.length} setItemOffset={setItemOffset} itemsOffSet={itemsOffSet}/>
+          </div>
           : <div>No Sales Found</div>)
         }
+        </div>
       </div>
     </Layout>
   );

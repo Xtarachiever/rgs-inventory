@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { updatePurchases } from "@/store/slices/PurchaseSlice";
 import { getSession } from "next-auth/react";
+import Paginate from "@/component/pagination/Paginate";
 
 const Purchases = () => {
   const router = useRouter();
@@ -16,9 +17,14 @@ const Purchases = () => {
   const [loading, setLoading] = useState(false);
 
   const purchases = useSelector((state)=>state.purchases.purchases);
-  const [searchValue, setSearchValue] = useState('')
+  const [searchValue, setSearchValue] = useState('');
+  const [itemsOffSet, setItemOffset] = useState(0)
 
-  const [filteredPurchases, setFilteredPurchases] = useState([])
+  const [filteredPurchases, setFilteredPurchases] = useState([]);
+
+  const limit = 5
+  const endItemOffSet = itemsOffSet + limit;
+  const currentItems = filteredPurchases.slice(itemsOffSet,endItemOffSet)
   
   const dispatch = useDispatch();
   const {
@@ -153,7 +159,10 @@ const Purchases = () => {
           {
             purchaseLoader ? <div className="loader"></div> :
             (filteredPurchases && filteredPurchases?.length !== 0) ? 
-            <Table data={filteredPurchases} columns={columns}/>
+            <div>
+              <Table data={currentItems} columns={columns}/>
+              <Paginate items={filteredPurchases} itemsPerPage={limit} totalItems={filteredPurchases?.length} setItemOffset={setItemOffset} itemsOffSet={itemsOffSet}/>
+            </div>
             : <div>No Purchase Found</div>
           }
         </div>

@@ -173,7 +173,7 @@ const Packages = () => {
               >
                 {preview ? (
                   <div>
-                    <img src={preview} alt="product" />
+                    <img src={preview} alt="product" className="max-h-[200px]"/>
                     <div>
                       <button
                         type="submit"
