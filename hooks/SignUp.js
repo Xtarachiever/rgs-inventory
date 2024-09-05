@@ -15,8 +15,7 @@ const SignUpHook = () => {
         firstName:"",
         lastName:"",
         email: "",
-        password: "",
-        confirmPassword:""
+        role:""
     },
   });
 
@@ -28,17 +27,16 @@ const SignUpHook = () => {
     return formState.isSubmitting;
   }, [formState]);
 
-  const {firstName, lastName,email, password, confirmPassword} = watch();
+  const {firstName, lastName,email, role} = watch();
 
   return {
     handleValueChange,
     handleSubmit,
     isSubmitting,
     email,
-    password,
+    role,
     firstName,
     lastName,
-    confirmPassword,
     errors: formState.errors
   };
 };

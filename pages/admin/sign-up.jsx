@@ -1,5 +1,4 @@
-import Layout from '@/component/Layout'
-import PasswordInput from '@/component/inputs/PasswordInput'
+import SelectInput from '@/component/inputs/SelectInput';
 import TextInput from '@/component/inputs/TextInput'
 import SignUpHook from '@/hooks/SignUp'
 import RgsIcon from '@/public/assets/RgsIcon';
@@ -8,7 +7,7 @@ import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 
 const SignUp = () => {
-    const {handleValueChange, handleSubmit, email, lastName, firstName, password, confirmPassword, errors} = SignUpHook();
+    const {handleValueChange, handleSubmit, email, lastName, firstName, errors} = SignUpHook();
     const [loading, setLoading] = useState(false);
 
     const route = useRouter();
@@ -42,7 +41,7 @@ const SignUp = () => {
         }
     }
   return (
-    <Layout>
+    <div className='mt-6 pt-6'>
         <ToastContainer />
         <div className="max-w-[700px] m-auto mt-5 bg-white shadow-xl p-6 py-10 border-primary border text-center">
             <RgsIcon className="m-auto"/>
@@ -59,14 +58,18 @@ const SignUp = () => {
                     <TextInput placeholder={'Email'} value={email} onChange={(e)=>handleValueChange('email',e.target.value)} name={'email'}/>
                     {errors?.email && <p className="text-red-500">{errors?.email?.message}</p>}
                 </div>
-                <div>
+                <div className='py-2 mb-3'>
+                    <SelectInput defaultName={'Role'} options={['Manager','Admin']} name={'role'} onChange={(e)=>handleValueChange('role',e.target.value)}/>
+                    {errors?.role && <p className="text-red-500">{errors?.role?.message}</p>}
+                </div>
+                {/* <div>
                     <PasswordInput placeholder={'Password'} value={password} onChange={(e)=>handleValueChange('password',e.target.value)} name={'password'}/>
                     {errors?.password && <p className="text-red-500">{errors?.password?.message}</p>}
                 </div>
                 <div className="pb-5">
                     <PasswordInput placeholder={'Confirm Password'} value={confirmPassword} onChange={(e)=>handleValueChange('confirmPassword',e.target.value)} name={'confirmPassword'}/>
                     {errors?.confirmPassword && <p className="text-red-500">{errors?.confirmPassword?.message}</p>}
-                </div>
+                </div> */}
                 <button className="px-6 py-2 bg-primary text-white" type="submit">
                     {
                         loading ? 'Loading...' : 'Sign Up'
@@ -74,7 +77,7 @@ const SignUp = () => {
                 </button>
             </form>
         </div>
-    </Layout>
+    </div>
   )
 }
 

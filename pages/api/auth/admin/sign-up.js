@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     )
     if(req.method === "POST"){
         try{
-            const { email, password, firstName, lastName } = req.body;
+            const { email, firstName, lastName, role } = req.body;
             const checkExistingUser = await Users.findOne({email: email});
 
             if(checkExistingUser){
@@ -19,7 +19,7 @@ export default async function handler(req, res) {
                 email: email,
                 firstName: firstName,
                 lastName: lastName,
-                password: await hash(password, 12),
+                role: role
             })
               .then((data) => {
                 return res
