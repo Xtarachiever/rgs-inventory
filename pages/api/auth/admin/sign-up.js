@@ -1,18 +1,34 @@
 import connectMongo from "@/database/conn";
 import Users from "@/models/UserSchema";
-import { hash } from "bcrypt";
+import { generateEmailContent } from "@/services/generateEmail";
+import { transporter } from "@/config/nodemailer";
 
 export default async function handler(req, res) {
     await connectMongo().catch((error)=>
         res.json({message:'Connection Failed ...'})
     )
+
     if(req.method === "POST"){
         try{
             const { email, firstName, lastName, role } = req.body;
+            const mailOptions = {
+                from: process.env.EMAIL,
+                to: email
+            }
             const checkExistingUser = await Users.findOne({email: email});
 
             if(checkExistingUser){
                 return res.status(422).json({ status:false, message: "User Already Exists...!" });
+            }
+
+            try {
+                await transporter.sendMail({
+                  ...mailOptions,
+                  ...generateEmailContent(req.body),
+                  subject: `Complete Registration ${firstName} ${lastName}`,
+                });
+              } catch (error) {
+                return res.status(400).json({ message: error.message });
             }
 
             Users.create({

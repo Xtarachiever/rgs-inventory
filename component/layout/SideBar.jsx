@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { SideBarContent } from "./SideBarContent";
 import { useSession } from "next-auth/react";
+import { GrUserManager } from "react-icons/gr";
 
 const SideBar = () => {
   const route = useRouter();
@@ -83,7 +84,13 @@ const SideBar = () => {
               })}
           </div>
         ))}
-        <p onClick={() => signOut()} className="flex items-center pt-4 ml-5 hover:text-primary cursor-pointer">
+        {
+          session?.user?.role === 'Admin' && 
+            <button onClick={() => route.push('/admin/sign-up')} className="flex items-center pt-4 ml-5 hover:text-primary cursor-pointer">
+              <GrUserManager className="mr-3 font-bold" fontSize="1.4rem" /> Register Managers
+            </button>
+        }
+        <p onClick={() => signOut()} className="flex items-center pt-6 ml-5 hover:text-primary cursor-pointer">
           <PiSignOut className="mr-3 font-bold" fontSize="1.4rem" /> Sign Out
         </p>
       </div>

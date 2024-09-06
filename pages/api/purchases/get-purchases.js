@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     );
     if (req.method === "GET") {
       try {
-        const getPurchases = await Purchase.find({});
+        const getPurchases = await Purchase.find({}).sort({ createdAt: -1 });
 
         if(!getPurchases){
             return res.status(401).json({message:'No Purchase found'})

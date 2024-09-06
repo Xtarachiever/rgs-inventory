@@ -7,7 +7,7 @@ export default async function handler(req,res){
     );
     if(req.method === "GET"){
         try{
-            const getAllProducts = await AddProduct.find({});
+            const getAllProducts = await AddProduct.find({}).sort({ createdAt: -1 });
             if(!getAllProducts){
                 return res.status(304).json({message: "No product Found"})
             }

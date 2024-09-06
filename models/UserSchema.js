@@ -26,6 +26,9 @@ const userSchema = new Schema({
         required:true,
         trim:true
     },
+    password: { 
+        type: String
+    },
 },
 { toJSON: { virtuals: true }, toObject: { virtuals: true }, timestamps: true }
 )

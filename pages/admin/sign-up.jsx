@@ -5,6 +5,7 @@ import RgsIcon from '@/public/assets/RgsIcon';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
+import { getSession } from 'next-auth/react';
 
 const SignUp = () => {
     const {handleValueChange, handleSubmit, email, lastName, firstName, errors} = SignUpHook();
@@ -24,7 +25,7 @@ const SignUp = () => {
                     email:values.email,
                     firstName:values.firstName,
                     lastName:values.lastName,
-                    password:values.password
+                    role:values.role
                 })
             })
             setLoading(false)
@@ -32,8 +33,10 @@ const SignUp = () => {
             if(!data?.status){
                 toast.error(data?.message)
             }else{
-                toast.success('Registered Successfully')
-                route.push('/login')
+                toast.success('Success. Check email to complete registration')
+                setTimeout(()=>{
+                    route.push('/login')
+                },1000)
             }
         }catch(err){
             toast.error(err?.message);
@@ -41,7 +44,7 @@ const SignUp = () => {
         }
     }
   return (
-    <div className='mt-6 pt-6'>
+    <div className='pt-[50px] login_bg'>
         <ToastContainer />
         <div className="max-w-[700px] m-auto mt-5 bg-white shadow-xl p-6 py-10 border-primary border text-center">
             <RgsIcon className="m-auto"/>
@@ -62,14 +65,6 @@ const SignUp = () => {
                     <SelectInput defaultName={'Role'} options={['Manager','Admin']} name={'role'} onChange={(e)=>handleValueChange('role',e.target.value)}/>
                     {errors?.role && <p className="text-red-500">{errors?.role?.message}</p>}
                 </div>
-                {/* <div>
-                    <PasswordInput placeholder={'Password'} value={password} onChange={(e)=>handleValueChange('password',e.target.value)} name={'password'}/>
-                    {errors?.password && <p className="text-red-500">{errors?.password?.message}</p>}
-                </div>
-                <div className="pb-5">
-                    <PasswordInput placeholder={'Confirm Password'} value={confirmPassword} onChange={(e)=>handleValueChange('confirmPassword',e.target.value)} name={'confirmPassword'}/>
-                    {errors?.confirmPassword && <p className="text-red-500">{errors?.confirmPassword?.message}</p>}
-                </div> */}
                 <button className="px-6 py-2 bg-primary text-white" type="submit">
                     {
                         loading ? 'Loading...' : 'Sign Up'
@@ -82,3 +77,26 @@ const SignUp = () => {
 }
 
 export default SignUp
+
+export async function getServerSideProps({ req }) {
+    const session = await getSession({ req });
+  
+    if (!session) {
+      return {
+        redirect: {
+          destination: "/login",
+          permanent: false,
+        },
+      };
+    }else if (session && session?.user?.role !== 'Admin'){
+        return {
+            redirect: {
+              destination: "/dashboard",
+              permanent: false,
+            },
+          };
+    }
+    return {
+      props: { session },
+    };
+}

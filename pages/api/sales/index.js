@@ -8,8 +8,8 @@ export default async function handler(req,res){
             res.json({message:'Connection Failed ...'})
         );
         try{
-            const { productName, salesPrice, quantity,customerName} = req.body
-            const sale = await recordSales(productName,quantity, salesPrice, customerName);
+            const { productName, salesPrice, quantity,customerName, madeBy} = req.body
+            const sale = await recordSales(productName,quantity, salesPrice, customerName,madeBy);
 
             return res.status(201).json({ message: "Sale recorded successfully", sale });
 

@@ -13,7 +13,7 @@ export default async function handler(req, res) {
     );
     if (req.method === "GET") {
       try {
-        const getSales = await Sales.find({});
+        const getSales = await Sales.find({}).sort({ createdAt: -1 });
 
         if(!getSales){
             return res.status(401).json({message:'No sale found'})

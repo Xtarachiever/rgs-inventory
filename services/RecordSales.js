@@ -1,7 +1,7 @@
 import AddProduct from "@/models/AddProductSchema";
 import Sales from "@/models/SaleSchema";
 
-const recordSales = async (productName, quantitySold, salesPrice,customerName) => {
+const recordSales = async (productName, quantitySold, salesPrice,customerName,madeBy) => {
     // Find the product
     const product = await AddProduct.findOne({ productName });
 
@@ -25,7 +25,8 @@ const recordSales = async (productName, quantitySold, salesPrice,customerName) =
         quantity: quantitySold,
         salesPrice,
         customerName,
-        profitLoss: salesPrice*quantitySold - product?.salesPrice*quantitySold
+        profitLoss: salesPrice*quantitySold - product?.salesPrice*quantitySold,
+        madeBy
         // total: quantitySold * salesPrice
     });
     await sale.save();

@@ -25,6 +25,9 @@ const addSaleSchema = new Schema({
     },
     profitLoss:{
         type: String,
+    },
+    madeBy:{
+        type:String
     }
 },
 { toJSON: { virtuals: true }, toObject: { virtuals: true }, timestamps: true }

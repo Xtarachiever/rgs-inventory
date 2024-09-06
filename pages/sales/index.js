@@ -8,11 +8,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import Table from "@/component/tables/Table";
 import { useRouter } from "next/navigation";
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import Paginate from "@/component/pagination/Paginate";
 
 const Sales = () => {
   const router = useRouter();
+
+  const {data:session} = useSession();
 
   const sales = useSelector((state)=>state.sales.sales);
 
@@ -60,6 +62,10 @@ const Sales = () => {
         accessor: "salesPrice",
       },
       {
+        Header: "Made By",
+        accessor: "madeBy"
+      },
+      {
         Header: "Actions",
         Cell: ({ row }) => {
           return (
@@ -81,7 +87,13 @@ const Sales = () => {
         setLoading(true);
         const res = await fetch('/api/sales',{
           method:'POST',
-          body:JSON.stringify(values),
+          body:JSON.stringify({
+            productName: values.productName,
+            salesPrice: values.salesPrice,
+            quantity: values.quantity,
+            customerName:values.customerName,
+            madeBy:`${session?.user?.firstName} ${session?.user?.lastName}`
+          }),
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
