@@ -56,7 +56,7 @@ const Notifications = () => {
     },[])
   return (
     <Layout>
-        <div>
+        <div className='min-h-[100vh]'>
             <p className='text-lg'>Notifications</p>
             {
                 loading ? <div className='loader'></div>

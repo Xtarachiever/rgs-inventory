@@ -164,6 +164,10 @@ body {
       background-position: 0% 50%;
   }
 }
+
+.product_details p{
+  padding-top: 10px;
+}
 @media screen and (max-width:1120px) {
   .product_images{
     grid-template-columns: 1fr 1fr;

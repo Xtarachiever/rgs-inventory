@@ -11,6 +11,7 @@ const DashboardPage = () => {
   const products = useSelector((state)=>state.products.products)
   const purchases = useSelector((state)=>state.purchases.purchases)
 
+
   // Purchases to be recieved 
   let purchasesToBeReceived = 0;
   for(let i=0;i<purchases.length;i++){

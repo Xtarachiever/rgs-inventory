@@ -90,7 +90,7 @@ const SideBar = () => {
               <GrUserManager className="mr-3 font-bold" fontSize="1.4rem" /> Register Managers
             </button>
         }
-        <p onClick={() => signOut()} className="flex items-center pt-6 ml-5 hover:text-primary cursor-pointer">
+        <p onClick={() => signOut()} className="flex items-center pt-8 ml-5 hover:text-primary cursor-pointer">
           <PiSignOut className="mr-3 font-bold" fontSize="1.4rem" /> Sign Out
         </p>
       </div>

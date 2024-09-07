@@ -7,7 +7,6 @@ import SalesHook from "@/hooks/SalesHook";
 import { useState, useEffect } from "react";
 import { parseISO, format } from 'date-fns';
 
-
 const DashboardLayout = ({totalProductsAvailable,purchasesToBeReceived,noOfUnpaidProducts}) => {
 
     const { loading } = SalesHook();
@@ -21,7 +20,7 @@ const DashboardLayout = ({totalProductsAvailable,purchasesToBeReceived,noOfUnpai
     const [pieData, setPieData] = useState([]);
     const [images, setImages] = useState([]);
 
-    const [imagesLoading,setImagesLoading] = useState(false)
+    const [imagesLoading,setImagesLoading] = useState(false);
 
     useEffect(() => {
         const salesByDay = {};
@@ -141,7 +140,7 @@ const DashboardLayout = ({totalProductsAvailable,purchasesToBeReceived,noOfUnpai
                         </div>
                     </div>
                     <div className={styles.top_products}>
-                        <p className={styles.header}>Top 3 Products for the week</p>
+                        <p className={styles.header}>Top 3 Sales for the week</p>
                         {
                             Object.entries(topProducts)?.length !== 0
                             ?

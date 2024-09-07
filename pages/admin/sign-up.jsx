@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { getSession } from 'next-auth/react';
+import { IoArrowBackOutline } from "react-icons/io5";
 
 const SignUp = () => {
     const {handleValueChange, handleSubmit, email, lastName, firstName, errors} = SignUpHook();
@@ -46,6 +47,7 @@ const SignUp = () => {
   return (
     <div className='pt-[50px] login_bg'>
         <ToastContainer />
+        <p className='text-white px-10 flex items-center cursor-pointer' onClick={()=>route.push('/dashboard')}><IoArrowBackOutline className='mr-2'/>Back</p>
         <div className="max-w-[700px] m-auto mt-5 bg-white shadow-xl p-6 py-10 border-primary border text-center">
             <RgsIcon className="m-auto"/>
             <form className="w-[90%] m-auto" onSubmit={handleSubmit(onSubmit)}>
