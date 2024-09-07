@@ -37,10 +37,14 @@ const Packages = () => {
       const file = target.files[0];
       setPreview(URL?.createObjectURL(file));
       setImageFile(file);
-
-      handleValueOnChange("image", `${title}_productImage_.`);
     }
   };
+
+  useEffect(() => {
+    if (title && imageFile) {
+      handleValueOnChange("image", `${title}_productImage_.`);
+    }
+  }, [title, imageFile]); 
 
   useEffect(() => {
     if (openModal) {
