@@ -12,7 +12,7 @@ export default async function handler(req, res) {
         try{
             const { email, firstName, lastName, role } = req.body;
             const mailOptions = {
-                from: process.env.EMAIL,
+                from: process.env.EMAILFROM,
                 to: email
             }
             const checkExistingUser = await Users.findOne({email: email});
