@@ -3,8 +3,8 @@ import { FaChevronLeft } from "react-icons/fa6";
 import { FaChevronRight } from "react-icons/fa6";
 import styles from "./styles.module.css";
 
-const Paginate = ({ items, eachItemPerPage, setItemOffset, totalItems }) => {
-  const itemsPerPage = eachItemPerPage ? eachItemPerPage : 10;
+const Paginate = ({ items, limit, setItemOffset, totalItems }) => {
+  const itemsPerPage = limit ? limit : 10;
 
 
   const pageCount = Math.ceil(totalItems / itemsPerPage);

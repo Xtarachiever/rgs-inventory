@@ -40,6 +40,7 @@ const SingleProduct = () => {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
+          credentials: 'include',
           body:JSON.stringify({
             productName:values.productName,
             shortName:values.shortName,
@@ -52,7 +53,7 @@ const SingleProduct = () => {
           })
         })
         setLoading(false)
-        if(res.ok){
+        if(res?.ok){
           toast.success("Product successfully updated");
           reset();
           setOpenModal(false)

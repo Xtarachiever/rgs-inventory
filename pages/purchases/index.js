@@ -16,7 +16,12 @@ const Purchases = () => {
   const [modal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const purchases = useSelector((state)=>state.purchases.purchases);
+  const sortedPurchases= useSelector((state) => state.purchases.purchases);
+
+  const purchases = useMemo(() => {
+    return [...sortedPurchases].sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+  }, [sortedPurchases]);
+
   const [searchValue, setSearchValue] = useState('');
   const [itemsOffSet, setItemOffset] = useState(0)
 
@@ -24,7 +29,10 @@ const Purchases = () => {
 
   const limit = 5
   const endItemOffSet = itemsOffSet + limit;
-  const currentItems = filteredPurchases.slice(itemsOffSet,endItemOffSet)
+
+  const currentItems = useMemo(() => {
+    return filteredPurchases.slice(itemsOffSet, endItemOffSet);
+  }, [filteredPurchases, itemsOffSet, endItemOffSet]);
   
   const dispatch = useDispatch();
   const {
@@ -55,7 +63,8 @@ const Purchases = () => {
       setLoading(false)
       if(res.ok){
         setOpenModal(false)
-        dispatch(updatePurchases(values))
+        const data = await res?.json();
+        dispatch(updatePurchases(data?.purchase))
       }
     }catch(error){
       console.log(error)
@@ -141,7 +150,6 @@ const Purchases = () => {
     setFilteredPurchases(purchases)
   },[purchases])
 
-
   return (
     <Layout>
       <ToastContainer limit={1}/>
@@ -155,13 +163,13 @@ const Purchases = () => {
           value={searchValue}
           onChange={(e)=>handlePurchaseSearch(e)}
         />
-        <div className="overflow-scroll mt-8">
+        <div className="overflow-scroll mt-8 min-h-[100vh]">
           {
             purchaseLoader ? <div className="loader"></div> :
             (filteredPurchases && filteredPurchases?.length !== 0) ? 
             <div>
               <Table data={currentItems} columns={columns}/>
-              <Paginate items={filteredPurchases} itemsPerPage={limit} totalItems={filteredPurchases?.length} setItemOffset={setItemOffset} itemsOffSet={itemsOffSet}/>
+              <Paginate items={filteredPurchases} limit={limit} totalItems={filteredPurchases?.length} setItemOffset={setItemOffset} itemsOffSet={itemsOffSet}/>
             </div>
             : <div>No Purchase Found</div>
           }

@@ -34,8 +34,8 @@ const PurchaseHook = () =>{
         const res = await fetch('/api/purchases/get-purchases',{
           method:'GET'
         });
-        setLoading(false)
         if(res.ok){
+          setLoading(false)
           const data = await res.json();
           dispatch(setPurchases(data?.purchases))
         }

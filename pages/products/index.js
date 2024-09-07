@@ -12,7 +12,13 @@ import { updateProducts } from "@/store/slices/ProductSlice";
 import { getSession } from "next-auth/react";
 const Products = () => {
   const [openModal, setOpenModal] = useState(false);
-  const products = useSelector((state) => state.products.products);
+
+  const sortedProducts = useSelector((state) => state.products.products);
+
+  const products = useMemo(() => {
+    return [...sortedProducts].sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+  }, [sortedProducts]);
+
 
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchValue, setSearchValue] = useState('')

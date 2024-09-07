@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 const Layout = ({children, navLink}) => {
     const params = usePathname();
     const [activeNav, setActiveNav] = useState(false);
-    const excludedPaths = ['/login','/','/admin/sign-up']
+    const excludedPaths = ['/login','/','/admin/sign-up','/notifications']
   return (
     <div className="w-full relative">
         <Navbar activeNav={activeNav} setActiveNav={setActiveNav} navLink={navLink}/>

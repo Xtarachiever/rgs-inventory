@@ -12,8 +12,8 @@ export const purchaseSlice = createSlice({
         setPurchases(state,action){
             state.purchases = action.payload
         },
-        updatePurchases(state,action){
-            state.purchases.push(action.payload)
+        updatePurchases(state, action) {
+            state.purchases = [...state.purchases, action.payload];
         },
     }
 })

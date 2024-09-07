@@ -1,9 +1,12 @@
 import connectMongo from "@/database/conn";
 import AddProduct from "@/models/AddProductSchema";
 import { toast } from "react-toastify";
-
+import Notifications from "@/models/NotificationSchema";
+import { getServerSession } from "next-auth";
 
 export default async function handler(req,res){
+    const session = await getServerSession( req, res);
+
     if(req.method === "POST"){
         await connectMongo().catch((error)=>
             res.json({message:'Connection Failed ...'})
@@ -26,6 +29,11 @@ export default async function handler(req,res){
                 quantity,
                 slug: productName.toLowerCase().replace(/\s+/g, '-')
             }).then((data)=>{
+                Notifications.create({
+                    userId: session?.user?._id,
+                    userName: `${session?.user?.email}`,
+                    message:`${session?.user?.email.toUpperCase()} added ${quantity} quantity of ${productName}`
+                })
                 return res.status(201).json({message:"Product Successfully added", products: data})
             }).catch((err) => {
                 toast.error(err?.message)

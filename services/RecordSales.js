@@ -1,7 +1,12 @@
 import AddProduct from "@/models/AddProductSchema";
 import Sales from "@/models/SaleSchema";
+import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
+import Notifications from "@/models/NotificationSchema";
 
-const recordSales = async (productName, quantitySold, salesPrice,customerName,madeBy) => {
+const recordSales = async (productName, quantitySold, salesPrice,customerName,madeBy,req,res) => {
+
+    const session = await getServerSession(req,res);
     // Find the product
     const product = await AddProduct.findOne({ productName });
 
@@ -29,6 +34,11 @@ const recordSales = async (productName, quantitySold, salesPrice,customerName,ma
         madeBy
         // total: quantitySold * salesPrice
     });
+    await Notifications.create({
+        userId: session?.user?._id,
+        userName: `${session?.user?.email}`,
+        message:`${session?.user?.email} sold ${quantitySold} quantity of ${productName} at ${salesPrice}`
+    })
     await sale.save();
 
     return sale;

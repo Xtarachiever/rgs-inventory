@@ -3,6 +3,7 @@ import Purchase from "@/models/PurchaseSchema";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
 import AddProduct from "@/models/AddProductSchema";
+import Notifications from "@/models/NotificationSchema";
 
 export default async function handler(req, res) {
   const session = await getServerSession(req, res, authOptions);
@@ -52,6 +53,11 @@ export default async function handler(req, res) {
               quantity,
               slug: productName.toLowerCase().replace(/\s+/g, '-')
             }).then((data)=>{
+                Notifications.create({
+                  userId: session?.user?._id,
+                  userName: `${session?.user?.email}`,
+                  message:`${session?.user?.email.toUpperCase()} purchased ${quantity} quantity of ${productName} at ${purchasePrice}`
+              })
               return res.status(201).json({status:true, message: "Successfully added", product:data})
             }).catch((err) => {
                 return res.status(404).json({message: err?.message });

@@ -16,7 +16,11 @@ const Sales = () => {
 
   const {data:session} = useSession();
 
-  const sales = useSelector((state)=>state.sales.sales);
+  const sortedSales= useSelector((state) => state.sales.sales);
+
+  const sales = useMemo(() => {
+    return [...sortedSales].sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+  }, [sortedSales]);
 
   const [openModal, setOpenModal] = useState(false);
   const [filteredSales, setFilteredSales] = useState(sales)
@@ -31,7 +35,7 @@ const Sales = () => {
 
   const limit = 5
   const endItemOffSet = itemsOffSet + limit;
-  const currentItems = filteredSales.slice(itemsOffSet,endItemOffSet)
+  const currentItems = filteredSales?.slice(itemsOffSet,endItemOffSet)
 
   const handleSalesUpdate = async (id) => {
     try {
@@ -101,7 +105,7 @@ const Sales = () => {
         });
         setLoading(false)
         const data = await res.json();
-        if(!res.ok){
+        if(!data.status){
           toast.error(data?.message)
         }else{
           setOpenModal(false)
@@ -161,9 +165,9 @@ const Sales = () => {
         ) : (
           <></>
         )}
-        <div className="overflow-scroll mt-8">
+        <div className="overflow-scroll mt-8 min-h-[100vh]">
         {
-          loading ? <div className="loader"></div> :
+          loading ? (<div className="loader"></div>) :
           ((filteredSales && filteredSales?.length !== 0) ? 
           <div>
             <Table data={currentItems} columns={columns}/>

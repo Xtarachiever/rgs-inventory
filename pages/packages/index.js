@@ -90,7 +90,7 @@ const Packages = () => {
       });
       setLoading(false);
       const data = await res.json();
-      if (res?.ok) {
+      if (data?.status) {
         setPreview("");
         reset();
         setOpenModal(false);
